@@ -2,100 +2,94 @@
 
 > Modular AI skill packages for LiteStartup. Install all or pick what you need.
 
+## What Problem Does It Solve?
+
+Your AI editor writes great code — but publishing content still requires dashboards, CLIs, or manual deploys. **LiteStartup Skills bridges that gap:**
+
+- **One prompt to publish** — write content in your editor, say "sync", and it's live
+- **No context switching** — blog, docs, website, changelog, email all from the same workspace
+- **Spec-driven quality** — AI follows precise format rules, no broken pages or bad frontmatter
+- **Git-native** — your content repo is the single source of truth
+
 ## Available Skills
 
 | Skill | Description | Directory |
 |-------|-------------|-----------|
-| **Publish** | Publish blog, docs, website, changelog, and send emails from your AI editor | `publish/` |
+| **Publish** | Publish blog, docs, website, changelog, and send campaign emails from your AI editor | `publish/` |
 
-More skills coming soon: deploy, analytics, admin.
+More skills coming soon: video-generator, admin.
 
 ## Quick Start
 
-### Install All Skills
-
 ```bash
+# 1. Clone
 git clone https://github.com/litestartup-com/litestartup-skills.git
+
+# 2. Copy adapter to your content repo
+cp litestartup-skills/adapters/windsurf/.windsurfrules  my-content/.windsurfrules
+
+# 3. Open your content repo in AI editor, then say:
+#    "Bind this repo to my LiteStartup account"
+#    "Write a blog post about our launch"
+#    "Sync all content to production"
 ```
 
-### Install a Single Skill (sparse checkout)
+## Your Content Repo Structure
 
-```bash
-git clone --filter=blob:none --sparse https://github.com/litestartup-com/litestartup-skills.git
-cd litestartup-skills
-git sparse-checkout set shared publish adapters
+After binding and writing content, your repo will look like this:
+
+```
+my-content/
+├── litestartup.yaml          ← Auto-generated config (binding, domain, sync rules)
+├── blog/
+│   └── announcing-myapp-launch.md
+├── website/
+│   ├── index.html
+│   └── about.html
+├── docs/
+│   ├── config.json
+│   └── en/
+│       ├── _nav.md
+│       ├── _sidebar.md
+│       └── index.md
+└── changelog/
+    └── v1.0.0.md
 ```
 
-### Setup Your Editor
+## Editor Support
 
-Copy the adapter file for your editor into your **content repo** workspace:
-
-| Editor | Copy from | Copy to |
+| Editor | Adapter file | Copy to |
 |--------|-----------|----------|
-| Windsurf | `adapters/windsurf/.windsurfrules` | `.windsurfrules` (workspace root) |
+| Windsurf | `adapters/windsurf/.windsurfrules` | `.windsurfrules` |
 | Cursor | `adapters/cursor/litestartup.mdc` | `.cursor/rules/litestartup.mdc` |
-| Claude Code | `adapters/claude/CLAUDE.md` | `CLAUDE.md` (workspace root) |
-| Codex | `adapters/codex/AGENTS.md` | `AGENTS.md` (workspace root) |
+| Claude Code | `adapters/claude/CLAUDE.md` | `CLAUDE.md` |
+| Codex | `adapters/codex/AGENTS.md` | `AGENTS.md` |
 
-### Get API Key
-
-Log in to [LiteStartup Dashboard](https://app.litestartup.com) → Settings → API Keys → Create with `system.publish` scope.
-
-### Bind and Publish
-
-```
-> Bind this repo to my LiteStartup account.
-> Write a blog post about our new release.
-> Sync all my content to production.
-```
-
-## Architecture
+## Repo Structure
 
 ```
 litestartup-skills/
-├── README.md                ← You are here
-├── RULE.md                  ← Development rules
-├── shared/                  ← Shared infrastructure
-│   └── _lib.sh             ← Common bash functions (auth, API calls)
-├── publish/                 ← Publish Skill
-│   ├── SKILL.md            ← Entry point (AI reads this first)
-│   ├── capabilities/       ← How to perform actions
-│   ├── specs/              ← How to write content
-│   ├── templates/          ← Ready-to-use starter files
-│   └── scripts/            ← Bash scripts for API calls
-└── adapters/               ← Per-editor integration files
-    ├── windsurf/.windsurfrules
-    ├── cursor/litestartup.mdc
-    ├── claude/CLAUDE.md
-    └── codex/AGENTS.md
+├── shared/_lib.sh            ← Common bash functions (auth, API)
+├── publish/                  ← Publish Skill
+│   ├── SKILL.md             ← AI entry point (router)
+│   ├── capabilities/        ← bind, sync, status, email
+│   ├── specs/               ← blog, docs, website, changelog format rules
+│   ├── templates/           ← Starter files for each content type
+│   └── scripts/             ← Bash automation (ls-sync.sh, ls-bind.sh)
+└── adapters/                 ← Per-editor integration files
 ```
-
-## Design Principles
-
-1. **Monorepo** — All skills in one repo. Shared infrastructure, unified versioning.
-2. **Modular** — Each skill is self-contained in its own directory. Install all or just one.
-3. **Router-based** — Adapters route user intent to the correct skill, then to the correct capability.
-4. **Agent-agnostic** — Core logic in SKILL.md + specs/ + capabilities/. Adapters translate to each editor's format.
-5. **Spec-driven** — Content rules are precise, with tables and checklists — no ambiguity.
-6. **Template-first** — Every content type has a ready-to-copy template file.
 
 ## Security
 
-- API keys NEVER appear in AI conversation
-- `~/.litestartup/credentials` is read only by scripts
-- Scope-limited keys (`system.publish` only)
-
-## Requirements
-
-- `git`, `curl`, `bash` (for Linux/macOS script path)
-- A [LiteStartup](https://litestartup.com) account with API key
-- A public git repository (GitHub/GitLab/Gitee)
+- API keys NEVER appear in AI conversation or logs
+- Keys stored in `~/.litestartup/credentials`, read only by scripts
+- Scope-limited: `system.publish` only
 
 ## Links
 
-- **Website**: https://www.litestartup.com/products/litestartup-skills
+- **Product page**: https://www.litestartup.com/products/litestartup-skills
 - **Documentation**: https://www.litestartup.com/docs/en/features/litestartup-skills
-- **Demo Repo**: https://github.com/litestartup-com/litestartup-workspace
+- **Demo content repo**: https://github.com/litestartup-com/litestartup-workspace
 
 ## License
 
