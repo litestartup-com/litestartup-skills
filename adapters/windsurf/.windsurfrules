@@ -1,0 +1,38 @@
+# LiteStartup Skills
+# Copy this file to your workspace root as .windsurfrules
+
+You have access to the LiteStartup skills suite.
+
+## Skill Router
+
+| Skill | Intent | Entry Point |
+|-------|--------|-------------|
+| publish | "publish", "sync", "write blog/docs/website/changelog", "send email", "bind repo" | `litestartup-skills/publish/SKILL.md` |
+
+When the user makes a request, match intent to the table above, then read the corresponding SKILL.md for detailed routing.
+
+## Location
+
+- Skills root: `litestartup-skills/`
+- Publish Skill: `litestartup-skills/publish/SKILL.md`
+  - Capabilities: `litestartup-skills/publish/capabilities/`
+  - Content specs: `litestartup-skills/publish/specs/`
+  - Templates: `litestartup-skills/publish/templates/`
+  - Scripts: `litestartup-skills/publish/scripts/`
+- Shared scripts: `litestartup-skills/shared/`
+
+## How to Use
+
+1. Match user intent to the Skill Router table above
+2. Read the matched `SKILL.md` to determine capability or spec
+3. Load the relevant capability or spec file from the router table
+4. Follow the instructions in that file exactly
+
+## Key Rules
+
+1. NEVER read or display API keys (`~/.litestartup/credentials`)
+2. Look for `litestartup.yaml` to identify the content repo
+3. When writing content, ALWAYS read the relevant spec file first
+4. For website pages: CONFIRM page type (website vs block) before writing
+5. After writing content: sync per `capabilities/sync.md` (environment-aware: Windows → AI-native API / Linux → script)
+6. Validate structure against the spec checklist before syncing

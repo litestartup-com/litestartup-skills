@@ -1,0 +1,29 @@
+---
+description: LiteStartup skills suite — publish content, send emails, and more
+globs: ["blog/**", "docs/**", "website/**", "changelog/**", "litestartup.yaml"]
+---
+
+# LiteStartup Skills
+
+Modular AI skill packages for LiteStartup.
+
+## Skill Router
+
+| Skill | Intent | Entry Point |
+|-------|--------|-------------|
+| publish | publish, sync, write blog/docs/website/changelog, send email, bind repo | `litestartup-skills/publish/SKILL.md` |
+
+## File References
+
+- Publish Skill: `litestartup-skills/publish/SKILL.md`
+  - Capabilities: `litestartup-skills/publish/capabilities/{bind,sync,email,status}.md`
+  - Specs: `litestartup-skills/publish/specs/{docs,blog,website,changelog}.md`
+  - Templates: `litestartup-skills/publish/templates/`
+
+## Rules
+
+1. NEVER display API keys (`~/.litestartup/credentials`)
+2. Look for `litestartup.yaml` to find the content repo
+3. Read the relevant spec BEFORE writing any content
+4. For website pages: confirm type (website vs block) with user first
+5. After writing: sync per `capabilities/sync.md` (Windows → AI-native API / Linux → script)

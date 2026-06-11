@@ -1,0 +1,41 @@
+{
+  "site": {
+    "name": "My Product",
+    "title": "My Documentation",
+    "description": "Official documentation for My Product",
+    "keywords": [
+      "my-product",
+      "documentation"
+    ],
+    "logo": "",
+    "favicon": ""
+  },
+  "locales": {
+    "default": "en",
+    "available": [
+      "en"
+    ]
+  },
+  "theme": {
+    "primary_color": "#3b82f6",
+    "dark_mode": true
+  },
+  "seo": {
+    "canonical_base": "https://www.example.com",
+    "og_image": "https://www.example.com/imgs/og-docs.jpg",
+    "twitter_site": "@yourhandle"
+  },
+  "links": {
+    "github": "",
+    "twitter": "",
+    "discord": "",
+    "website": "https://www.example.com"
+  },
+  "analytics": {
+    "google_analytics_id": "",
+    "google_tag_manager_id": ""
+  },
+  "footer": {
+    "copyright": "© 2026 My Company"
+  }
+}

@@ -1,0 +1,15 @@
+version: 1
+binding_id: <auto-filled-by-ls-bind>
+domain: <auto-filled-by-ls-bind>
+domain_slug: <auto-filled-by-ls-bind>
+endpoint: https://api.litestartup.com
+repo_url: https://github.com/your-username/your-content-repo
+sync:
+  blog:
+    path: "blog/**/*.md"
+  website:
+    path: "website/**/*.html"
+  docs:
+    path: "docs/**/*.md"
+  changelog:
+    path: "changelog/**/*.md"

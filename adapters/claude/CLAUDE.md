@@ -1,0 +1,38 @@
+# LiteStartup Skills
+
+You have access to the LiteStartup skills suite.
+
+## Skill Router
+
+| Skill | Intent | Entry Point |
+|-------|--------|-------------|
+| publish | "publish", "sync", "write content", "send email", "bind repo" | `litestartup-skills/publish/SKILL.md` |
+
+## How to Use
+
+1. Match user intent to the Skill Router table above
+2. Read the matched `SKILL.md` for capability routing
+3. Based on user intent, load the relevant file:
+   - Actions → `publish/capabilities/` directory
+   - Writing content → `publish/specs/` directory
+   - Starting from scratch → `publish/templates/` directory
+
+## Security
+
+NEVER read or display `~/.litestartup/credentials`.
+
+## Sync
+
+Read `publish/capabilities/sync.md` for environment-aware sync:
+- **Windows (PowerShell)** → AI-native path (direct REST API calls)
+- **Linux / macOS** → `publish/scripts/ls-sync.sh`
+
+## Quick Routing
+
+- Bind repo → `publish/capabilities/bind.md`
+- Sync/publish → `publish/capabilities/sync.md`
+- Write docs → `publish/specs/docs.md`
+- Write blog → `publish/specs/blog.md`
+- Write website page → `publish/specs/website.md` (MUST confirm type: website vs block)
+- Write changelog → `publish/specs/changelog.md`
+- Send email → `publish/capabilities/email.md`

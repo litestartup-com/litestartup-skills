@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My SaaS | All-in-one Platform</title>
+    <script src="/js/3.4.17.js"></script>
+    <style>
+        /* Shared CSS classes available to all child pages */
+        .btn-primary { /* ... */ }
+        .card { /* ... */ }
+        .fade-in { /* ... */ }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-sm border-b border-gray-100">
+            <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+                <a href="/" class="font-bold text-xl">Brand</a>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="/pricing" class="text-gray-600 hover:text-gray-900">Pricing</a>
+                    <a href="/docs/en/" class="text-gray-600 hover:text-gray-900">Docs</a>
+                    <a href="/signup{{utm_source}}" class="btn-primary">Get Started</a>
+                </div>
+                <button id="menuBtn" class="md:hidden p-2">☰</button>
+            </div>
+        </nav>
+        <div id="mobileOverlay" class="fixed inset-0 bg-black/50 hidden z-40"></div>
+        <div id="mobileDrawer" class="fixed top-0 right-0 w-72 h-full bg-white hidden z-50 p-6">
+            <button id="closeMenuBtn" class="absolute top-4 right-4">✕</button>
+            <nav class="mt-12 flex flex-col gap-4">
+                <a href="/pricing">Pricing</a>
+                <a href="/docs/en/">Docs</a>
+                <a href="/signup{{utm_source}}" class="btn-primary text-center">Get Started</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="pt-32 pb-20 px-6 text-center">
+            <h1 class="text-5xl font-bold">Your SaaS Headline</h1>
+            <p class="mt-6 text-xl text-gray-600 max-w-2xl mx-auto">
+                Compelling subheadline that explains your value proposition.
+            </p>
+            <a href="/signup{{utm_source}}" class="btn-primary inline-block mt-8">
+                Get Started Free
+            </a>
+        </section>
+
+        <!-- More sections... -->
+
+        <script>
+            // Page-specific JavaScript (animations, interactions)
+        </script>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-16 px-6">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="font-bold mb-4">Brand</h3>
+                <p class="text-gray-400 text-sm">Your tagline here.</p>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-3">Product</h4>
+                <a href="/pricing" class="block text-gray-400 hover:text-white text-sm mb-2">Pricing</a>
+                <a href="/docs/en/" class="block text-gray-400 hover:text-white text-sm mb-2">Docs</a>
+            </div>
+        </div>
+        <div class="mt-12 text-center text-gray-500 text-sm">© 2026 Brand. All rights reserved.</div>
+    </footer>
+
+    <button id="toTopBtn" class="fixed bottom-6 right-6 w-10 h-10 rounded-full bg-gray-800 text-white hidden items-center justify-center shadow-lg">↑</button>
+    <script>
+        // Shared JS: mobile drawer, scroll-to-top
+        const menuBtn = document.getElementById('menuBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const overlay = document.getElementById('mobileOverlay');
+        const drawer = document.getElementById('mobileDrawer');
+        function openMenu() { drawer.classList.remove('hidden'); overlay.classList.remove('hidden'); }
+        function closeMenu() { drawer.classList.add('hidden'); overlay.classList.add('hidden'); }
+        menuBtn?.addEventListener('click', openMenu);
+        closeMenuBtn?.addEventListener('click', closeMenu);
+        overlay?.addEventListener('click', closeMenu);
+
+        // Scroll to top
+        const toTop = document.getElementById('toTopBtn');
+        window.addEventListener('scroll', () => {
+            toTop.style.display = window.scrollY > 300 ? 'flex' : 'none';
+        });
+        toTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    </script>
+</body>
+</html>
