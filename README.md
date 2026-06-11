@@ -26,7 +26,7 @@ More skills coming soon: video-generator, admin.
 git clone https://github.com/litestartup-com/litestartup-skills.git
 
 # 2. Copy adapter to your content repo
-cp litestartup-skills/adapters/windsurf/.windsurfrules  my-content/.windsurfrules
+cp litestartup-skills/adapters/codex/AGENTS.md  my-content/AGENTS.md
 
 # 3. Open your content repo in AI editor, then say:
 #    "Bind this repo to my LiteStartup account"
@@ -60,10 +60,9 @@ my-content/
 
 | Editor | Adapter file | Copy to |
 |--------|-----------|----------|
-| Windsurf | `adapters/windsurf/.windsurfrules` | `.windsurfrules` |
-| Cursor | `adapters/cursor/litestartup.mdc` | `.cursor/rules/litestartup.mdc` |
-| Claude Code | `adapters/claude/CLAUDE.md` | `CLAUDE.md` |
 | Codex | `adapters/codex/AGENTS.md` | `AGENTS.md` |
+| Claude Code | `adapters/claude/CLAUDE.md` | `CLAUDE.md` |
+| Cursor | `adapters/cursor/litestartup.mdc` | `.cursor/rules/litestartup.mdc` |
 
 ## Repo Structure
 
