@@ -7,6 +7,8 @@ repo_url: https://github.com/your-username/your-content-repo
 sync:
   blog:
     path: "blog/**/*.md"
+  campaign:
+    path: "campaign/**/*.md"
   website:
     path: "website/**/*.html"
   docs:

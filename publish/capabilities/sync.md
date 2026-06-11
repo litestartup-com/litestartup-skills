@@ -23,9 +23,10 @@ Use this when running in a Windows environment where bash is unavailable.
    - Docs: check `title` + verify `_sidebar.md` exists
    - Website: check structure matches type (website/block)
    - Changelog: check `title` + `date`
+   - Campaign: check `subject` + `from` + `tag` + confirm with user if status is `ready`/`scheduled`
 3. Git commit and push:
    ```powershell
-   git add -A blog/ website/ docs/ changelog/ litestartup.yaml
+   git add -A blog/ campaign/ website/ docs/ changelog/ litestartup.yaml
    git commit -m "content: <brief description>"
    git push
    ```
@@ -38,7 +39,7 @@ Use this when running in a Windows environment where bash is unavailable.
    # Full sync (all files):
    $body = @{ commit_sha = $commitSha; domain_slug = "<domain_slug_from_yaml>" } | ConvertTo-Json
    # Partial sync (only changed files — optional, faster):
-   $changed = (git diff --name-only HEAD~1 HEAD) -match '^(blog|website|docs|changelog)/'
+   $changed = (git diff --name-only HEAD~1 HEAD) -match '^(blog|campaign|website|docs|changelog)/'
    if ($changed) {
      $body = @{ commit_sha = $commitSha; domain_slug = "<domain_slug_from_yaml>"; paths = @($changed) } | ConvertTo-Json -Depth 3
    }
@@ -81,7 +82,7 @@ scripts/ls-sync.sh "content: add pricing page"
 ```
 
 Script performs atomically:
-- `git add -A blog/ website/ docs/ changelog/ litestartup.yaml`
+- `git add -A blog/ campaign/ website/ docs/ changelog/ litestartup.yaml`
 - `git commit -m "<message>"`
 - `git push`
 - `POST /client/v2/repo-sync/trigger` with commit SHA
@@ -95,6 +96,7 @@ Examples:
 - `content: update docs quick-start guide`
 - `content: publish v0.3.0 changelog`
 - `content: new blog post about email features`
+- `content: add June product launch campaign`
 
 ## Sync Results
 
@@ -122,7 +124,7 @@ The API accepts an optional `paths` array to sync only specific files:
 - User only changed 1-2 files and wants faster feedback
 - AI detects small change set via `git diff --name-only`
 
-**Path format**: relative from repo root, e.g. `website/products/workmail.html`, `docs/en/guide/quick-start.md`. Must start with `blog/`, `website/`, `docs/`, or `changelog/`.
+**Path format**: relative from repo root, e.g. `website/products/workmail.html`, `docs/en/guide/quick-start.md`. Must start with `blog/`, `campaign/`, `website/`, `docs/`, or `changelog/`.
 
 ## Important Notes
 

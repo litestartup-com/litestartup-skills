@@ -66,6 +66,20 @@ Only when user says "send from my domain" or specifies `--from`:
 
 ---
 
+## Campaign Emails (Bulk / Marketing)
+
+This capability is for **single, direct emails only** (1-to-1 or small batch).
+
+For **bulk marketing campaigns** (send to all contacts with a tag), use the campaign workflow instead:
+→ See `specs/campaign.md` — write a campaign `.md` file in `campaign/` and sync.
+
+**How to decide:**
+- "Send an email to john@example.com" → **this capability** (direct email)
+- "Send a newsletter to all subscribers" → **campaign** (specs/campaign.md)
+- "Email our product launch to everyone tagged 'beta-users'" → **campaign** (specs/campaign.md)
+
+---
+
 ## Important Notes
 
 - Email content is NOT saved to git (it's a direct API call)

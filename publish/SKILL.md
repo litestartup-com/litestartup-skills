@@ -30,6 +30,7 @@ When the user makes a request, determine intent and load the relevant file:
 | "bind", "connect repo", "unbind", "list domains" | `capabilities/bind.md` | `ls-bind.sh` |
 | "publish", "sync", "deploy" | `capabilities/sync.md` | `ls-sync.sh` |
 | "send email", "send notification", "email someone" | `capabilities/email.md` | `ls-send-email.sh` |
+| "send campaign", "email campaign", "bulk email", "newsletter" | `specs/campaign.md` | (uses sync) |
 | "status", "what's synced" | `capabilities/status.md` | `ls-status.sh` |
 
 When the user wants to **write content**, load the relevant spec:
@@ -40,6 +41,7 @@ When the user wants to **write content**, load the relevant spec:
 | Blog post | `specs/blog.md` | `.md` (in `blog/`) |
 | Changelog | `specs/changelog.md` | `.md` (in `changelog/`) |
 | Website page | `specs/website.md` | `.html` (in `website/`) |
+| Campaign email | `specs/campaign.md` | `.md` (in `campaign/`) |
 
 After writing → run sync (capabilities/sync.md).
 
@@ -49,6 +51,7 @@ After writing → run sync (capabilities/sync.md).
 <content-repo>/
 ├── litestartup.yaml          ← Binding config (auto-created by ls-bind.sh)
 ├── blog/*.md                 ← Blog posts (markdown → HTML by server)
+├── campaign/*.md             ← Email campaigns (markdown → HTML, sent to tag contacts)
 ├── website/                  ← Website pages (raw HTML, Tailwind CSS)
 │   ├── index.html            ← Homepage (type: website, full HTML)
 │   ├── *.html                ← Root block pages (/pricing, /about, etc.)

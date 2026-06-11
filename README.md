@@ -43,6 +43,8 @@ my-content/
 ├── litestartup.yaml          ← Auto-generated config (binding, domain, sync rules)
 ├── blog/
 │   └── announcing-myapp-launch.md
+├── campaign/
+│   └── june-product-launch.md
 ├── website/
 │   ├── index.html
 │   └── about.html
@@ -71,8 +73,8 @@ litestartup-skills/
 ├── shared/_lib.sh            ← Common bash functions (auth, API)
 ├── publish/                  ← Publish Skill
 │   ├── SKILL.md             ← AI entry point (router)
-│   ├── capabilities/        ← bind, sync, status, email
-│   ├── specs/               ← blog, docs, website, changelog format rules
+│   ├── capabilities/        ← bind, sync, status, email, campaign
+│   ├── specs/               ← blog, docs, website, changelog, campaign format rules
 │   ├── templates/           ← Starter files for each content type
 │   └── scripts/             ← Bash automation (ls-sync.sh, ls-bind.sh)
 └── adapters/                 ← Per-editor integration files
