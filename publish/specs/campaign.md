@@ -88,7 +88,41 @@ The Team
 - The `tag` field uses the tag **name** (human-readable), not the tag ID
 - The tag must already exist in the user's LS account (Contacts → Tags)
 - If the tag does not exist or has 0 contacts, sync will report an error
-- **Ask the user** which tag to use; do NOT guess
+- Do NOT invent tag names — always verify against the API
+
+### Tag Resolution Flow
+
+1. Query the user's tags via API (see below)
+2. **If user already specified a tag name** (e.g., "给 newsletter 发一封 campaign"):
+   - Match against the API response (case-insensitive)
+   - If matched and `active_contacts > 0` → use it directly
+   - If matched but `active_contacts == 0` → warn user: "tag exists but has no active contacts"
+   - If NOT matched → show available tags and ask user to pick
+3. **If user did NOT specify a tag**: present the tag list and let them choose
+
+### Listing Available Tags
+
+Query tags via:
+
+```
+GET {endpoint}/client/v2/repo-sync/tags
+Authorization: Bearer {api_key}
+```
+
+Response:
+```json
+{
+  "code": 200,
+  "data": {
+    "tags": [
+      { "id": 1, "name": "newsletter", "color": "#3b82f6", "active_contacts": 142 },
+      { "id": 2, "name": "beta-users", "color": "#10b981", "active_contacts": 58 }
+    ]
+  }
+}
+```
+
+Use the `name` value in frontmatter `tag` field.
 
 ---
 
