@@ -11,7 +11,6 @@ See `AGENT_SKILLS_SPEC.md` for the official Agent Skills specification reference
 
 ```
 litestartup-skills/
-├── shared/                    ← Source of truth for _lib.sh (dev reference only)
 ├── litestartup-{skill}/       ← One directory per skill (self-contained)
 │   ├── SKILL.md               ← Required: metadata + instructions (router)
 │   ├── references/            ← Optional: capabilities, specs, guides
@@ -28,9 +27,8 @@ litestartup-skills/
 2. **One file per concern.** Never merge multiple references into one file.
 3. **References are self-contained.** Each file must be independently understandable.
 4. **Assets are copy-paste ready.** Every template must work as-is when copied.
-5. **Skills are self-contained.** Each skill directory must work standalone when installed via `npx skills add`. No cross-directory references (e.g., `../../shared/`).
-6. **Shared code: copy, don't reference.** `shared/_lib.sh` is the dev source of truth. Each skill keeps its own copy at `{skill}/scripts/_lib.sh`. Sync all copies when `shared/_lib.sh` changes.
-7. **Agent-native first.** Prefer markdown instructions over scripts. Use scripts only when deterministic automation is required.
+5. **Skills are self-contained.** Each skill directory must work standalone when installed via `npx skills add`. No cross-directory references.
+6. **Agent-native first.** Prefer markdown instructions over scripts. Use scripts only when deterministic automation is required.
 
 ---
 

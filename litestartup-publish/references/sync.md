@@ -78,10 +78,19 @@ Common scenarios:
 ## Path B: Script (Linux / macOS / WSL)
 
 ```bash
+# Preview what will be synced (safe, no push):
 bash scripts/ls-sync.sh "content: add pricing page"
+
+# Full automation (commit + push + deploy):
+bash scripts/ls-sync.sh --yes "content: add pricing page"
+
+# Dry-run (show files, no git operations):
+bash scripts/ls-sync.sh --dry-run
 ```
 
-Script performs atomically:
+**Safety model:** Without `--yes`, the script only commits locally. Push + deploy requires explicit `--yes` flag.
+
+With `--yes`, script performs:
 - `git add -A blog/ campaign/ website/ docs/ changelog/ litestartup.yaml`
 - `git commit -m "<message>"`
 - `git push`

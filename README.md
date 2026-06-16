@@ -71,7 +71,6 @@ my-content/
 
 ```
 litestartup-skills/
-├── shared/_lib.sh                ← Common bash functions (dev reference)
 ├── litestartup-publish/          ← Publish Skill
 │   ├── SKILL.md                 ← AI entry point (router)
 │   ├── references/              ← Capabilities + content specs
