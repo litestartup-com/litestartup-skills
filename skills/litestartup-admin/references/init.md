@@ -43,7 +43,18 @@
    - Tell user: "A LiteStartup API Key with `auth` scope is required."
    - Explain purpose: "This key enables user authentication, AI chat, and profile management. Your app data is stored on the LS backend."
    - Provide link: https://app.litestartup.com/settings/api-keys
-   - User pastes Key → save to `~/.litestartup/credentials` (chmod 600)
+   - **NEVER ask user to paste the key in chat.** Instead, instruct them to save it manually:
+     ```
+     mkdir -p ~/.litestartup
+     echo "YOUR_KEY_HERE" > ~/.litestartup/credentials
+     chmod 600 ~/.litestartup/credentials
+     ```
+   - Or on Windows PowerShell:
+     ```
+     New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.litestartup"
+     Set-Content -Path "$env:USERPROFILE\.litestartup\credentials" -Value "YOUR_KEY_HERE"
+     ```
+   - Tell user: "Replace YOUR_KEY_HERE with your actual key, then tell me when done."
    - Go back to 4b to verify
 
 5. **Generate `.env.local`**

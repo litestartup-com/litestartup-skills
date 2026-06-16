@@ -15,12 +15,22 @@ Your AI editor writes great code — but publishing content still requires dashb
 
 | Skill | Description | Directory |
 |-------|-------------|-----------|
-| **Publish** | Publish blog, docs, website, changelog, and send campaign emails from your AI editor | `litestartup-publish/` |
-| **Admin** | Initialize, configure and deploy SaaS applications using litesaas-admin boilerplate | `litestartup-admin/` |
+| **Publish** | Publish blog, docs, website, changelog, and send campaign emails from your AI editor | `skills/litestartup-publish/` |
+| **Admin** | Initialize, configure and deploy SaaS applications using litesaas-admin boilerplate | `skills/litestartup-admin/` |
 
 More skills coming soon: video-generator, deploy.
 
 ## Quick Start
+
+### Option A: npx (recommended)
+
+```bash
+# Install a specific skill
+npx skills add litestartup-com/litestartup-skills --skill litestartup-publish
+npx skills add litestartup-com/litestartup-skills --skill litestartup-admin
+```
+
+### Option B: Manual
 
 ```bash
 # 1. Clone
@@ -71,15 +81,16 @@ my-content/
 
 ```
 litestartup-skills/
-├── litestartup-publish/          ← Publish Skill
-│   ├── SKILL.md                 ← AI entry point (router)
-│   ├── references/              ← Capabilities + content specs
-│   ├── assets/                  ← Starter templates
-│   └── scripts/                 ← Linux/macOS fallback scripts
-├── litestartup-admin/            ← Admin Skill (agent-native, no scripts)
-│   ├── SKILL.md                 ← AI entry point (router)
-│   ├── references/              ← Init, configure, status, feature specs
-│   └── assets/                  ← .env template
+├── skills/                       ← npx skills add scans this directory
+│   ├── litestartup-publish/      ← Publish Skill
+│   │   ├── SKILL.md             ← AI entry point (router)
+│   │   ├── references/          ← Capabilities + content specs
+│   │   ├── assets/              ← Starter templates
+│   │   └── scripts/             ← Linux/macOS fallback scripts
+│   └── litestartup-admin/        ← Admin Skill (agent-native, no scripts)
+│       ├── SKILL.md             ← AI entry point (router)
+│       ├── references/          ← Init, configure, status, feature specs
+│       └── assets/              ← .env template
 └── adapters/                     ← Per-editor integration files
 ```
 

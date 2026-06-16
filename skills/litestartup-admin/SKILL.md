@@ -18,6 +18,7 @@ Scaffold and manage SaaS applications powered by [litesaas-admin](https://github
 
 - API keys stored at `~/.litestartup/credentials`
 - **NEVER** read, display, or echo the key in conversation
+- **NEVER** ask user to paste the key in chat — guide them to write the file directly
 - If auth fails → tell user to check key scope at LS dashboard
 
 ## Prerequisites

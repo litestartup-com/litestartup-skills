@@ -11,23 +11,26 @@ Modular AI skill packages for LiteStartup.
 
 | Skill | Intent | Entry Point |
 |-------|--------|-------------|
-| litestartup-publish | publish, sync, write blog/docs/website/changelog, send email, bind repo | `litestartup-publish/SKILL.md` |
-| litestartup-admin | init saas, create project, scaffold, configure, deploy | `litestartup-admin/SKILL.md` |
+| litestartup-publish | publish, sync, write blog/docs/website/changelog, send email, bind repo | `skills/litestartup-publish/SKILL.md` |
+| litestartup-admin | init saas, create project, scaffold, configure, deploy | `skills/litestartup-admin/SKILL.md` |
 
 ## File References
 
-- Publish Skill: `litestartup-publish/SKILL.md`
-  - References: `litestartup-publish/references/{bind,sync,email,status,docs,blog,website,changelog,campaign}.md`
-  - Assets: `litestartup-publish/assets/`
-  - Scripts: `litestartup-publish/scripts/` (Linux/macOS fallback)
-- Admin Skill: `litestartup-admin/SKILL.md`
-  - References: `litestartup-admin/references/{init,configure,status,env-config,ls-capabilities,features}.md`
-  - Assets: `litestartup-admin/assets/`
+- Publish Skill: `skills/litestartup-publish/SKILL.md`
+  - References: `skills/litestartup-publish/references/{bind,sync,email,status,docs,blog,website,changelog,campaign}.md`
+  - Assets: `skills/litestartup-publish/assets/`
+  - Scripts: `skills/litestartup-publish/scripts/` (Linux/macOS fallback)
+- Admin Skill: `skills/litestartup-admin/SKILL.md`
+  - References: `skills/litestartup-admin/references/{init,configure,status,env-config,ls-capabilities,features}.md`
+  - Assets: `skills/litestartup-admin/assets/`
 
 ## Rules
 
 1. NEVER display API keys (`~/.litestartup/credentials`)
-2. Look for `litestartup.yaml` to find the content repo
-3. Read the relevant spec BEFORE writing any content
-4. For website pages: confirm type (website vs block) with user first
-5. After writing: sync per `litestartup-publish/references/sync.md` (Windows → AI-native / Linux → script)
+2. **Skill Isolation**: admin and publish are INDEPENDENT skills with different prerequisites:
+   - admin (init/configure) → checks `.env.local`, does NOT need `litestartup.yaml` or git remote
+   - publish (bind/sync) → checks `litestartup.yaml`, needs git remote
+3. For publish: look for `litestartup.yaml` to find the content repo
+4. Read the relevant spec BEFORE writing any content
+5. For website pages: confirm type (website vs block) with user first
+6. After writing: sync per `skills/litestartup-publish/references/sync.md` (Windows → AI-native / Linux → script)

@@ -11,12 +11,13 @@ See `AGENT_SKILLS_SPEC.md` for the official Agent Skills specification reference
 
 ```
 litestartup-skills/
-├── litestartup-{skill}/       ← One directory per skill (self-contained)
-│   ├── SKILL.md               ← Required: metadata + instructions (router)
-│   ├── references/            ← Optional: capabilities, specs, guides
-│   ├── assets/                ← Optional: templates, configs
-│   └── scripts/               ← Optional: executable code (cross-platform preferred)
-└── adapters/                  ← Per-editor integration files
+├── skills/                        ← npx skills add scans this directory
+│   └── litestartup-{skill}/       ← One directory per skill (self-contained)
+│       ├── SKILL.md               ← Required: metadata + instructions (router)
+│       ├── references/            ← Optional: capabilities, specs, guides
+│       ├── assets/                ← Optional: templates, configs
+│       └── scripts/               ← Optional: executable code (cross-platform preferred)
+└── adapters/                      ← Per-editor integration files
 ```
 
 ---
@@ -34,14 +35,14 @@ litestartup-skills/
 
 ## Adding a New Skill
 
-1. Create `litestartup-{skill}/SKILL.md` — name must match directory name exactly
-2. Create `litestartup-{skill}/references/` with at least one reference
+1. Create `skills/litestartup-{skill}/SKILL.md` — name must match directory name exactly
+2. Create `skills/litestartup-{skill}/references/` with at least one reference
 3. Add the skill to the **router table** in all adapter files (`adapters/*/`)
 4. Add the skill to the top-level `README.md` Available Skills table
 
 ### Skill Naming Convention
 
-- Directory: `litestartup-{skill}/` (e.g., `litestartup-publish/`, `litestartup-admin/`)
+- Directory: `skills/litestartup-{skill}/` (e.g., `skills/litestartup-publish/`, `skills/litestartup-admin/`)
 - SKILL.md `name`: `litestartup-{skill}` (must match directory name)
 - Name rules: lowercase a-z, digits 0-9, hyphens only. No leading/trailing/consecutive hyphens.
 
@@ -51,8 +52,8 @@ litestartup-skills/
 
 When adding a new capability or content spec:
 
-1. Create `litestartup-{skill}/references/{name}.md`
-2. Add a row to the **router table** in `litestartup-{skill}/SKILL.md`
+1. Create `skills/litestartup-{skill}/references/{name}.md`
+2. Add a row to the **router table** in `skills/litestartup-{skill}/SKILL.md`
 3. Update all adapter files (`adapters/*/`)
 
 ### Reference File Structure (Capability)
@@ -107,7 +108,7 @@ When adding a new capability or content spec:
 
 ## Assets Rules
 
-- Path: `litestartup-{skill}/assets/{type}/` for multi-file types, `litestartup-{skill}/assets/{name}.ext` for single files
+- Path: `skills/litestartup-{skill}/assets/{type}/` for multi-file types, `skills/litestartup-{skill}/assets/{name}.ext` for single files
 - Every template must include all required fields with placeholder values
 - Use realistic placeholder content (not "lorem ipsum")
 - Comments in templates explain what to replace
@@ -148,7 +149,7 @@ Adapters should be **lightweight routers** — they tell the AI which skill to u
 
 | Item | Convention | Example |
 |------|-----------|---------|
-| Skill directory | `litestartup-{skill}/` | `litestartup-publish/` |
+| Skill directory | `skills/litestartup-{skill}/` | `skills/litestartup-publish/` |
 | SKILL.md `name` | `litestartup-{skill}` | `litestartup-publish` |
 | Reference file | `references/{name}.md` | `references/sync.md` |
 | Asset dir | `assets/{type}/` | `assets/docs/` |

@@ -7,20 +7,20 @@ You have access to the LiteStartup skills suite.
 
 | Skill | Intent | Entry Point |
 |-------|--------|-------------|
-| litestartup-publish | "publish", "sync", "write blog/docs/website/changelog", "send email", "bind repo" | `litestartup-publish/SKILL.md` |
-| litestartup-admin | "init saas", "create project", "scaffold", "configure", "deploy" | `litestartup-admin/SKILL.md` |
+| litestartup-publish | "publish", "sync", "write blog/docs/website/changelog", "send email", "bind repo" | `skills/litestartup-publish/SKILL.md` |
+| litestartup-admin | "init saas", "create project", "scaffold", "configure", "deploy" | `skills/litestartup-admin/SKILL.md` |
 
 When the user makes a request, match intent to the table above, then read the corresponding SKILL.md for detailed routing.
 
 ## Location
 
-- Publish Skill: `litestartup-publish/SKILL.md`
-  - References: `litestartup-publish/references/`
-  - Assets: `litestartup-publish/assets/`
-  - Scripts: `litestartup-publish/scripts/` (Linux/macOS fallback)
-- Admin Skill: `litestartup-admin/SKILL.md`
-  - References: `litestartup-admin/references/`
-  - Assets: `litestartup-admin/assets/`
+- Publish Skill: `skills/litestartup-publish/SKILL.md`
+  - References: `skills/litestartup-publish/references/`
+  - Assets: `skills/litestartup-publish/assets/`
+  - Scripts: `skills/litestartup-publish/scripts/` (Linux/macOS fallback)
+- Admin Skill: `skills/litestartup-admin/SKILL.md`
+  - References: `skills/litestartup-admin/references/`
+  - Assets: `skills/litestartup-admin/assets/`
 
 ## How to Use
 
@@ -32,8 +32,11 @@ When the user makes a request, match intent to the table above, then read the co
 ## Key Rules
 
 1. NEVER read or display API keys (`~/.litestartup/credentials`)
-2. Look for `litestartup.yaml` to identify the content repo
-3. When writing content, ALWAYS read the relevant spec file first
-4. For website pages: CONFIRM page type (website vs block) before writing
-5. After writing content: sync per `litestartup-publish/references/sync.md` (Windows → AI-native / Linux → script)
-6. Validate structure against the spec checklist before syncing
+2. **Skill Isolation**: admin and publish are INDEPENDENT skills with different prerequisites:
+   - admin (init/configure) → checks `.env.local`, does NOT need `litestartup.yaml` or git remote
+   - publish (bind/sync) → checks `litestartup.yaml`, needs git remote
+3. For publish: look for `litestartup.yaml` to identify the content repo
+4. When writing content, ALWAYS read the relevant spec file first
+5. For website pages: CONFIRM page type (website vs block) before writing
+6. After writing content: sync per `skills/litestartup-publish/references/sync.md` (Windows → AI-native / Linux → script)
+7. Validate structure against the spec checklist before syncing
