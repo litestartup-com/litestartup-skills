@@ -16,8 +16,9 @@ Your AI editor writes great code — but publishing content still requires dashb
 | Skill | Description | Directory |
 |-------|-------------|-----------|
 | **Publish** | Publish blog, docs, website, changelog, and send campaign emails from your AI editor | `publish/` |
+| **Admin** | Initialize, configure and deploy SaaS applications using litesaas-admin boilerplate | `admin/` |
 
-More skills coming soon: video-generator, admin.
+More skills coming soon: video-generator, deploy.
 
 ## Quick Start
 
@@ -77,6 +78,12 @@ litestartup-skills/
 │   ├── specs/               ← blog, docs, website, changelog, campaign format rules
 │   ├── templates/           ← Starter files for each content type
 │   └── scripts/             ← Bash automation (ls-sync.sh, ls-bind.sh)
+├── admin/                    ← Admin Skill
+│   ├── SKILL.md             ← AI entry point (router)
+│   ├── capabilities/        ← init, configure, status
+│   ├── specs/               ← env-config, ls-capabilities, features
+│   ├── templates/           ← .env template
+│   └── scripts/             ← ls-admin-init.sh
 └── adapters/                 ← Per-editor integration files
 ```
 
@@ -84,7 +91,7 @@ litestartup-skills/
 
 - API keys NEVER appear in AI conversation or logs
 - Keys stored in `~/.litestartup/credentials`, read only by scripts
-- Scope-limited: `system.publish` only
+- Scope-limited: `system.publish` (publish), `auth` (admin)
 
 ## Links
 

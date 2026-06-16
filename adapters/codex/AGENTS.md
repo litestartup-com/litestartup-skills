@@ -7,6 +7,7 @@ This workspace is connected to [LiteStartup](https://litestartup.com) via the Li
 | Skill | Intent | Entry Point |
 |-------|--------|-------------|
 | publish | publish, sync, write content, send email, bind repo | `litestartup-skills/publish/SKILL.md` |
+| admin | init saas, create project, scaffold, configure, deploy | `litestartup-skills/admin/SKILL.md` |
 
 ## Skill Location
 
@@ -16,6 +17,11 @@ This workspace is connected to [LiteStartup](https://litestartup.com) via the Li
   - Content specs: `litestartup-skills/publish/specs/` (how to write content)
   - Templates: `litestartup-skills/publish/templates/` (starter files)
   - Scripts: `litestartup-skills/publish/scripts/` (bash scripts for API calls)
+- Admin Skill entry: `litestartup-skills/admin/SKILL.md`
+  - Capabilities: `litestartup-skills/admin/capabilities/` (init, configure, status)
+  - Specs: `litestartup-skills/admin/specs/` (env-config, ls-capabilities, features)
+  - Templates: `litestartup-skills/admin/templates/`
+  - Scripts: `litestartup-skills/admin/scripts/`
 - Shared scripts: `litestartup-skills/shared/`
 
 ## Quick Reference
@@ -30,6 +36,9 @@ This workspace is connected to [LiteStartup](https://litestartup.com) via the Li
 | Write changelog | `publish/specs/changelog.md` |
 | Send email | `publish/capabilities/email.md` |
 | Check status | `publish/capabilities/status.md` |
+| Init SaaS project | `admin/capabilities/init.md` |
+| Configure LS connection | `admin/capabilities/configure.md` |
+| Add LS feature (email/AI/storage) | `admin/specs/ls-capabilities.md` |
 
 ## Sync
 

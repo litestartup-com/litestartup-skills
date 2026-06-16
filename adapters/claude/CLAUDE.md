@@ -7,15 +7,18 @@ You have access to the LiteStartup skills suite.
 | Skill | Intent | Entry Point |
 |-------|--------|-------------|
 | publish | "publish", "sync", "write content", "send email", "bind repo" | `litestartup-skills/publish/SKILL.md` |
+| admin | "init saas", "create project", "scaffold", "configure", "deploy" | `litestartup-skills/admin/SKILL.md` |
 
 ## How to Use
 
 1. Match user intent to the Skill Router table above
 2. Read the matched `SKILL.md` for capability routing
 3. Based on user intent, load the relevant file:
-   - Actions → `publish/capabilities/` directory
+   - Publish actions → `publish/capabilities/` directory
    - Writing content → `publish/specs/` directory
    - Starting from scratch → `publish/templates/` directory
+   - SaaS project init/config → `admin/capabilities/` directory
+   - Adding LS features → `admin/specs/ls-capabilities.md`
 
 ## Security
 
@@ -36,3 +39,6 @@ Read `publish/capabilities/sync.md` for environment-aware sync:
 - Write website page → `publish/specs/website.md` (MUST confirm type: website vs block)
 - Write changelog → `publish/specs/changelog.md`
 - Send email → `publish/capabilities/email.md`
+- Init SaaS project → `admin/capabilities/init.md`
+- Configure LS → `admin/capabilities/configure.md`
+- Add LS feature → `admin/specs/ls-capabilities.md`
