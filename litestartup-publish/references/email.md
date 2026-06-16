@@ -1,7 +1,7 @@
 # Capability: Send Email
 
 > **Trigger**: User says "send email", "send notification", "email someone".
-> **Script**: `scripts/ls-send-email.sh`
+> **Script (fallback)**: `scripts/ls-send-email.sh` (Linux/macOS only)
 
 ## Two Endpoints
 
@@ -71,12 +71,12 @@ Only when user says "send from my domain" or specifies `--from`:
 This capability is for **single, direct emails only** (1-to-1 or small batch).
 
 For **bulk marketing campaigns** (send to all contacts with a tag), use the campaign workflow instead:
-→ See `specs/campaign.md` — write a campaign `.md` file in `campaign/` and sync.
+→ See `references/campaign.md` — write a campaign `.md` file in `campaign/` and sync.
 
 **How to decide:**
 - "Send an email to john@example.com" → **this capability** (direct email)
-- "Send a newsletter to all subscribers" → **campaign** (specs/campaign.md)
-- "Email our product launch to everyone tagged 'beta-users'" → **campaign** (specs/campaign.md)
+- "Send a newsletter to all subscribers" → **campaign** (`references/campaign.md`)
+- "Email our product launch to everyone tagged 'beta-users'" → **campaign** (`references/campaign.md`)
 
 ---
 

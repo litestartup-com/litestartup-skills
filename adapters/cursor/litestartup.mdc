@@ -11,18 +11,18 @@ Modular AI skill packages for LiteStartup.
 
 | Skill | Intent | Entry Point |
 |-------|--------|-------------|
-| publish | publish, sync, write blog/docs/website/changelog, send email, bind repo | `litestartup-skills/publish/SKILL.md` |
-| admin | init saas, create project, scaffold, configure, deploy | `litestartup-skills/admin/SKILL.md` |
+| litestartup-publish | publish, sync, write blog/docs/website/changelog, send email, bind repo | `litestartup-publish/SKILL.md` |
+| litestartup-admin | init saas, create project, scaffold, configure, deploy | `litestartup-admin/SKILL.md` |
 
 ## File References
 
-- Publish Skill: `litestartup-skills/publish/SKILL.md`
-  - Capabilities: `litestartup-skills/publish/capabilities/{bind,sync,email,status}.md`
-  - Specs: `litestartup-skills/publish/specs/{docs,blog,website,changelog}.md`
-  - Templates: `litestartup-skills/publish/templates/`
-- Admin Skill: `litestartup-skills/admin/SKILL.md`
-  - Capabilities: `litestartup-skills/admin/capabilities/{init,configure,status}.md`
-  - Specs: `litestartup-skills/admin/specs/{env-config,ls-capabilities,features}.md`
+- Publish Skill: `litestartup-publish/SKILL.md`
+  - References: `litestartup-publish/references/{bind,sync,email,status,docs,blog,website,changelog,campaign}.md`
+  - Assets: `litestartup-publish/assets/`
+  - Scripts: `litestartup-publish/scripts/` (Linux/macOS fallback)
+- Admin Skill: `litestartup-admin/SKILL.md`
+  - References: `litestartup-admin/references/{init,configure,status,env-config,ls-capabilities,features}.md`
+  - Assets: `litestartup-admin/assets/`
 
 ## Rules
 
@@ -30,4 +30,4 @@ Modular AI skill packages for LiteStartup.
 2. Look for `litestartup.yaml` to find the content repo
 3. Read the relevant spec BEFORE writing any content
 4. For website pages: confirm type (website vs block) with user first
-5. After writing: sync per `capabilities/sync.md` (Windows → AI-native API / Linux → script)
+5. After writing: sync per `litestartup-publish/references/sync.md` (Windows → AI-native / Linux → script)

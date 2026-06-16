@@ -1,69 +1,69 @@
 # Skill Development Rules
 
-Rules for maintaining and extending litestartup-skills. Follow strictly when adding or updating any file.
+Rules for maintaining and extending litestartup-skills.
+Follow strictly when adding or updating any file.
+
+See `AGENT_SKILLS_SPEC.md` for the official Agent Skills specification reference.
 
 ---
 
-## Monorepo Structure
+## Repository Structure
 
 ```
 litestartup-skills/
-├── shared/           ← Shared infrastructure (scripts, auth)
-├── {skill}/          ← One directory per skill
-│   ├── SKILL.md      ← Entry point (router)
-│   ├── capabilities/ ← Action specs
-│   ├── specs/        ← Content writing specs
-│   ├── templates/    ← Copy-paste starter files
-│   └── scripts/      ← Bash scripts
-└── adapters/         ← Per-editor integration (top-level, routes to all skills)
+├── shared/                    ← Source of truth for _lib.sh (dev reference only)
+├── litestartup-{skill}/       ← One directory per skill (self-contained)
+│   ├── SKILL.md               ← Required: metadata + instructions (router)
+│   ├── references/            ← Optional: capabilities, specs, guides
+│   ├── assets/                ← Optional: templates, configs
+│   └── scripts/               ← Optional: executable code (cross-platform preferred)
+└── adapters/                  ← Per-editor integration files
 ```
 
 ---
 
 ## Architecture Invariants
 
-1. **SKILL.md is a router, not a spec.** Keep it under 100 lines. All details go in `specs/` or `capabilities/`.
-2. **One file per concern.** Never merge multiple specs or capabilities into one file.
-3. **Specs are self-contained.** Each spec file must be independently understandable without reading other files.
-4. **Templates are copy-paste ready.** Every template must work as-is when copied to the content repo.
-5. **Skills are independent.** Each skill directory must work without depending on other skill directories.
-6. **Shared code in `shared/`.** Cross-skill utilities go in `shared/`, never duplicated.
+1. **SKILL.md is a router, not a spec.** Keep body < 5000 tokens. All details go in `references/`.
+2. **One file per concern.** Never merge multiple references into one file.
+3. **References are self-contained.** Each file must be independently understandable.
+4. **Assets are copy-paste ready.** Every template must work as-is when copied.
+5. **Skills are self-contained.** Each skill directory must work standalone when installed via `npx skills add`. No cross-directory references (e.g., `../../shared/`).
+6. **Shared code: copy, don't reference.** `shared/_lib.sh` is the dev source of truth. Each skill keeps its own copy at `{skill}/scripts/_lib.sh`. Sync all copies when `shared/_lib.sh` changes.
+7. **Agent-native first.** Prefer markdown instructions over scripts. Use scripts only when deterministic automation is required.
 
 ---
 
 ## Adding a New Skill
 
-When creating a new skill (e.g., "deploy", "analytics"):
-
-1. Create `{skill}/SKILL.md` with `name: litestartup-{skill}` in frontmatter
-2. Create `{skill}/capabilities/` with at least one capability
-3. Create `{skill}/README.md` (optional, for humans)
-4. Add the skill to the **router table** in all adapter files (`adapters/*/`)
-5. Add the skill to the top-level `README.md` Available Skills table
+1. Create `litestartup-{skill}/SKILL.md` — name must match directory name exactly
+2. Create `litestartup-{skill}/references/` with at least one reference
+3. Add the skill to the **router table** in all adapter files (`adapters/*/`)
+4. Add the skill to the top-level `README.md` Available Skills table
 
 ### Skill Naming Convention
 
-- Directory: `{skill}/` (e.g., `publish/`, `deploy/`)
-- SKILL.md name: `litestartup-{skill}` (e.g., `litestartup-publish`)
+- Directory: `litestartup-{skill}/` (e.g., `litestartup-publish/`, `litestartup-admin/`)
+- SKILL.md `name`: `litestartup-{skill}` (must match directory name)
+- Name rules: lowercase a-z, digits 0-9, hyphens only. No leading/trailing/consecutive hyphens.
 
 ---
 
-## Adding a New Capability
+## Adding a New Reference
 
-When adding a new action (e.g., "unpublish", "preview"):
+When adding a new capability or content spec:
 
-1. Create `{skill}/capabilities/{name}.md`
-2. Add a row to the **Capability Router** table in `{skill}/SKILL.md`
-3. If a new script is needed, create `{skill}/scripts/ls-{name}.sh` (must source `../../shared/_lib.sh`)
-4. Update all adapter files (`adapters/*/`)
+1. Create `litestartup-{skill}/references/{name}.md`
+2. Add a row to the **router table** in `litestartup-{skill}/SKILL.md`
+3. Update all adapter files (`adapters/*/`)
 
-### Capability File Structure
+### Reference File Structure (Capability)
 
 ```markdown
 # Capability: {Name}
 
 > **Trigger**: When user says "..."
-> **Script**: `scripts/ls-{name}.sh`
+> **Mode**: Agent-native (no script required) | Script fallback: `scripts/...`
 
 ## Flow
 [numbered steps]
@@ -75,19 +75,7 @@ When adding a new action (e.g., "unpublish", "preview"):
 [table: Error | Cause | Resolution]
 ```
 
----
-
-## Adding a New Content Type
-
-When adding a new content type (e.g., "landing-page", "widget"):
-
-1. Create `{skill}/specs/{type}.md`
-2. Add a row to the **Content Type** table in `{skill}/SKILL.md`
-3. Create template(s) in `{skill}/templates/{type}/` (or `{skill}/templates/{type}.ext` if single file)
-4. Update `litestartup.yaml.example` sync paths if applicable
-5. Update all adapter files
-
-### Spec File Structure
+### Reference File Structure (Content Spec)
 
 ```markdown
 # {Type} Writing Spec
@@ -111,18 +99,18 @@ When adding a new content type (e.g., "landing-page", "widget"):
 
 ---
 
-## Updating Existing Specs
+## Updating Existing References
 
-1. **Do not break existing templates.** If a format changes, keep backward compatibility or note it as a breaking change.
+1. **Do not break existing templates.** Keep backward compatibility or note breaking changes.
 2. **Update the checklist** if adding new validation rules.
-3. **Add examples** for any new feature — show correct AND incorrect usage where applicable.
+3. **Add examples** for new features — show correct AND incorrect usage where applicable.
 
 ---
 
-## Templates Rules
+## Assets Rules
 
-- Path: `{skill}/templates/{type}/` for multi-file types, `{skill}/templates/{type}.ext` for single-file types
-- Every template must include all required fields/structure filled with placeholder values
+- Path: `litestartup-{skill}/assets/{type}/` for multi-file types, `litestartup-{skill}/assets/{name}.ext` for single files
+- Every template must include all required fields with placeholder values
 - Use realistic placeholder content (not "lorem ipsum")
 - Comments in templates explain what to replace
 
@@ -132,9 +120,8 @@ When adding a new content type (e.g., "landing-page", "widget"):
 
 All adapters must be updated when:
 - A new skill is added
-- A new capability or content type is added to any skill
+- A new reference is added to any skill
 - The routing table in any SKILL.md changes
-- Script names change
 
 Each adapter uses the **native format** of its target editor:
 - Windsurf: `.windsurfrules` (plain rules text)
@@ -148,10 +135,14 @@ Adapters should be **lightweight routers** — they tell the AI which skill to u
 
 ## Script Rules
 
-- All scripts source `../../shared/_lib.sh` for shared functions
+- **Agent-native first**: Most skills should be markdown-only. Add scripts only for deterministic automation.
+- **Cross-platform**: Prefer Node.js (`npx`/`node`) or Python (`uvx`/`python3`) over Bash for cross-platform compatibility.
+- Scripts source `_lib.sh` from the same `scripts/` directory (self-contained copy)
 - Scripts NEVER echo API keys to stdout
 - Scripts must handle errors gracefully with `ls_error()` / `ls_warn()` / `ls_ok()`
-- New scripts follow naming: `ls-{verb}.sh` (e.g., `ls-preview.sh`)
+- Avoid interactive prompts — use CLI arguments instead of `read -rsp`
+- Support `--help` for self-documentation
+- Use structured output (JSON) over text-aligned tables
 
 ---
 
@@ -159,33 +150,33 @@ Adapters should be **lightweight routers** — they tell the AI which skill to u
 
 | Item | Convention | Example |
 |------|-----------|---------|
-| Skill directory | `{skill}/` | `publish/` |
-| SKILL.md name | `litestartup-{skill}` | `litestartup-publish` |
-| Capability file | `{skill}/capabilities/{verb}.md` | `publish/capabilities/sync.md` |
-| Spec file | `{skill}/specs/{content-type}.md` | `publish/specs/docs.md` |
-| Script | `{skill}/scripts/ls-{verb}.sh` | `publish/scripts/ls-sync.sh` |
-| Template dir | `{skill}/templates/{type}/` | `publish/templates/docs/` |
-| Template file | `{skill}/templates/{type}.ext` | `publish/templates/blog-post.md` |
+| Skill directory | `litestartup-{skill}/` | `litestartup-publish/` |
+| SKILL.md `name` | `litestartup-{skill}` | `litestartup-publish` |
+| Reference file | `references/{name}.md` | `references/sync.md` |
+| Asset dir | `assets/{type}/` | `assets/docs/` |
+| Asset file | `assets/{name}.ext` | `assets/blog-post.md` |
+| Script | `scripts/ls-{verb}.sh` | `scripts/ls-sync.sh` |
 
 ---
 
 ## Version Bumping
 
-Update `version` in SKILL.md frontmatter when:
+Update `version` in SKILL.md `metadata` when:
 - **Patch** (x.y.Z): Fix typos, clarify wording, update examples
-- **Minor** (x.Y.0): Add new capability or content type
+- **Minor** (x.Y.0): Add new reference or asset
 - **Major** (X.0.0): Breaking change to file structure or routing
 
 ---
 
 ## Quality Checklist (Before Committing)
 
+- [ ] SKILL.md `name` matches directory name exactly
+- [ ] SKILL.md `description` describes what + when to use
 - [ ] SKILL.md router table is up to date
-- [ ] New spec/capability follows the file structure template above
-- [ ] Templates are valid and copy-paste ready
-- [ ] All adapters reference new capabilities/specs
+- [ ] New reference follows the file structure template above
+- [ ] Assets are valid and copy-paste ready
+- [ ] All adapters reference new skills/references
 - [ ] Top-level README.md skill table is up to date
-- [ ] `litestartup.yaml.example` paths are correct
 - [ ] No duplicate information across files
-- [ ] Each SKILL.md stays under 100 lines
-- [ ] Shared code is in `shared/`, not duplicated across skills
+- [ ] Each SKILL.md body stays under 5000 tokens
+- [ ] Scripts (if any) are cross-platform or clearly marked as fallback

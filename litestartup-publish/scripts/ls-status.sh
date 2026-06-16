@@ -2,7 +2,7 @@
 # T-PUBSKILL01 · Check repo sync status.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${SCRIPT_DIR}/../../shared/_lib.sh"
+source "${SCRIPT_DIR}/_lib.sh"
 
 RESPONSE=$(ls_api GET "/client/v2/repo-sync/status")
 

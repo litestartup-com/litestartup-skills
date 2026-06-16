@@ -2,9 +2,9 @@
 # LiteStartup Skills — Installer
 # Usage:
 #   curl -fsSL https://raw.githubusercontent.com/litestartup-com/litestartup-skills/main/install.sh | bash
-#   curl -fsSL ... | bash -s -- --skill publish
+#   curl -fsSL ... | bash -s -- --skill litestartup-publish
 #   curl -fsSL ... | bash -s -- --editor windsurf
-#   curl -fsSL ... | bash -s -- --skill publish --editor cursor
+#   curl -fsSL ... | bash -s -- --skill litestartup-publish --editor cursor
 
 set -euo pipefail
 
@@ -30,8 +30,8 @@ if [ -n "$SKILL" ]; then
     echo "📦 Installing skill: $SKILL (sparse checkout)"
     git clone --filter=blob:none --sparse "$REPO_URL" "$INSTALL_DIR" 2>/dev/null
     cd "$INSTALL_DIR"
-    git sparse-checkout set "shared" "$SKILL" "adapters" "README.md" "RULE.md" "install.sh"
-    echo "✅ Installed: shared/ + $SKILL/ + adapters/"
+    git sparse-checkout set "$SKILL" "adapters" "README.md" "RULE.md" "AGENT_SKILLS_SPEC.md" "install.sh"
+    echo "✅ Installed: $SKILL/ + adapters/"
 else
     echo "📦 Installing all skills"
     git clone --depth 1 "$REPO_URL" "$INSTALL_DIR" 2>/dev/null

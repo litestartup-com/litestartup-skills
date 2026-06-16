@@ -15,8 +15,8 @@ Your AI editor writes great code — but publishing content still requires dashb
 
 | Skill | Description | Directory |
 |-------|-------------|-----------|
-| **Publish** | Publish blog, docs, website, changelog, and send campaign emails from your AI editor | `publish/` |
-| **Admin** | Initialize, configure and deploy SaaS applications using litesaas-admin boilerplate | `admin/` |
+| **Publish** | Publish blog, docs, website, changelog, and send campaign emails from your AI editor | `litestartup-publish/` |
+| **Admin** | Initialize, configure and deploy SaaS applications using litesaas-admin boilerplate | `litestartup-admin/` |
 
 More skills coming soon: video-generator, deploy.
 
@@ -71,20 +71,17 @@ my-content/
 
 ```
 litestartup-skills/
-├── shared/_lib.sh            ← Common bash functions (auth, API)
-├── publish/                  ← Publish Skill
-│   ├── SKILL.md             ← AI entry point (router)
-│   ├── capabilities/        ← bind, sync, status, email, campaign
-│   ├── specs/               ← blog, docs, website, changelog, campaign format rules
-│   ├── templates/           ← Starter files for each content type
-│   └── scripts/             ← Bash automation (ls-sync.sh, ls-bind.sh)
-├── admin/                    ← Admin Skill
-│   ├── SKILL.md             ← AI entry point (router)
-│   ├── capabilities/        ← init, configure, status
-│   ├── specs/               ← env-config, ls-capabilities, features
-│   ├── templates/           ← .env template
-│   └── scripts/             ← ls-admin-init.sh
-└── adapters/                 ← Per-editor integration files
+├── shared/_lib.sh                ← Common bash functions (dev reference)
+├── litestartup-publish/          ← Publish Skill
+│   ├── SKILL.md                 ← AI entry point (router)
+│   ├── references/              ← Capabilities + content specs
+│   ├── assets/                  ← Starter templates
+│   └── scripts/                 ← Linux/macOS fallback scripts
+├── litestartup-admin/            ← Admin Skill (agent-native, no scripts)
+│   ├── SKILL.md                 ← AI entry point (router)
+│   ├── references/              ← Init, configure, status, feature specs
+│   └── assets/                  ← .env template
+└── adapters/                     ← Per-editor integration files
 ```
 
 ## Security

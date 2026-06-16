@@ -29,7 +29,7 @@
 
 ## Template
 
-See `templates/env.local.example` for a copy-paste starting point.
+See `assets/env.local.example` for a copy-paste starting point.
 
 ## Validation
 

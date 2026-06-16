@@ -1,12 +1,12 @@
 # Capability: Bind / Unbind Repo
 
 > **Trigger**: User says "bind to litestartup", "connect repo", "unbind", or no `litestartup.yaml` found.
-> **Script**: `scripts/ls-bind.sh`
+> **Script (fallback)**: `scripts/ls-bind.sh` (Linux/macOS only)
 
 ## Bind Flow
 
 1. Ask user to provide their LiteStartup API key (scope: `system.publish`) — only if `~/.litestartup/credentials` missing
-2. Run `scripts/ls-bind.sh [--domain <name_or_slug>] [repo_url]`
+2. Run `bash scripts/ls-bind.sh [--domain <name_or_slug>] [repo_url]` (or agent executes steps directly)
 3. Script performs:
    - Saves key to `~/.litestartup/credentials` (first time only)
    - Calls `GET /client/v2/repo-sync/domains` to list account domains
@@ -18,7 +18,7 @@
 
 ## Unbind Flow
 
-1. Run `scripts/ls-bind.sh --unbind [--domain <name_or_slug>]`
+1. Run `bash scripts/ls-bind.sh --unbind [--domain <name_or_slug>]` (or agent executes steps directly)
 2. Script performs:
    - Without `--domain`: reads `domain_slug` from `litestartup.yaml`
    - With `--domain`: resolves name to slug via domains API

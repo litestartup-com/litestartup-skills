@@ -1,11 +1,11 @@
 # Capability: Check Status
 
 > **Trigger**: User says "ls status", "what's synced?", "check sync status".
-> **Script**: `scripts/ls-status.sh`
+> **Script (fallback)**: `scripts/ls-status.sh` (Linux/macOS only)
 
 ## Flow
 
-1. Run `scripts/ls-status.sh`
+1. Run `bash scripts/ls-status.sh` (or agent calls the API directly)
 2. Display to user:
    - Binding status (bound/unbound)
    - Repo URL

@@ -1,7 +1,7 @@
 # Capability: Init
 
 > **Trigger**: When user says "init saas", "create project", "scaffold admin", "initialize"
-> **Script**: `scripts/ls-admin-init.sh`
+> **Mode**: Agent-native (no script required — agent executes steps directly)
 
 ## Flow
 

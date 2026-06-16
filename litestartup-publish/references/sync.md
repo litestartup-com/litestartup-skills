@@ -7,7 +7,7 @@
 Before syncing, detect the execution environment:
 
 - **Windows (PowerShell)** → Use **AI-native path** (PowerShell + direct REST API calls)
-- **Linux / macOS (bash)** → Use **script path** (`scripts/ls-sync.sh`)
+- **Linux / macOS (bash)** → Use **script path** (`scripts/ls-sync.sh`) as fallback
 
 ---
 
@@ -78,7 +78,7 @@ Common scenarios:
 ## Path B: Script (Linux / macOS / WSL)
 
 ```bash
-scripts/ls-sync.sh "content: add pricing page"
+bash scripts/ls-sync.sh "content: add pricing page"
 ```
 
 Script performs atomically:
@@ -138,7 +138,7 @@ The API accepts an optional `paths` array to sync only specific files:
 
 | Error | Cause | Resolution |
 |-------|-------|-----------|
-| 404 | No binding | Run `scripts/ls-bind.sh` first |
+| 404 | No binding | Run bind flow first (see `references/bind.md`) |
 | 422 | Clone/parse failed | Check file structure matches spec |
 | 429 | Rate limited | Wait and retry (but do NOT auto-retry) |
 | git push fails | Auth issue | User needs to fix git credentials |

@@ -9,7 +9,7 @@
 #   ls-send-email.sh --from=<email> --to=<email> --subject=<subject> --body=<body>
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${SCRIPT_DIR}/../../shared/_lib.sh"
+source "${SCRIPT_DIR}/_lib.sh"
 
 # Parse arguments
 FROM=""

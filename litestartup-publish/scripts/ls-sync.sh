@@ -4,7 +4,7 @@
 # Usage: ls-sync.sh [commit_message]
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${SCRIPT_DIR}/../../shared/_lib.sh"
+source "${SCRIPT_DIR}/_lib.sh"
 
 # --- Find content repo ---
 CONFIG_DIR=$(ls_find_config_dir)

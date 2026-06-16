@@ -5,7 +5,7 @@
 #   ls-bind.sh --unbind [--domain <name_or_slug>]
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${SCRIPT_DIR}/../../shared/_lib.sh"
+source "${SCRIPT_DIR}/_lib.sh"
 
 # --- Parse arguments ---
 DOMAIN_ARG=""

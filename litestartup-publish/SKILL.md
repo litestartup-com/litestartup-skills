@@ -1,7 +1,12 @@
 ---
 name: litestartup-publish
-description: Publish blog, docs, website, changelog and send emails via LiteStartup.
-version: 1.0.0
+description: >
+  Publish blog posts, documentation, website pages, changelogs, and send emails
+  via LiteStartup. Use when the user asks to publish content, sync a repo,
+  write a blog post, send an email, or bind a content repository.
+metadata:
+  author: litestartup-com
+  version: "1.0.0"
 ---
 
 # LiteStartup Publish Skill
@@ -13,43 +18,43 @@ Git repo is the source of truth → sync to production in one command.
 
 - API keys stored at `~/.litestartup/credentials` — scripts read internally
 - **NEVER** read, display, or echo the key in conversation
-- If auth fails → tell user to re-run `scripts/ls-bind.sh`
+- If auth fails → tell user to re-run bind flow (see `references/bind.md`)
 
 ## Prerequisites
 
 Check for `litestartup.yaml` in workspace.
 - Found → this is the content repo, proceed with requested action
-- Missing → guide user to bind first (see capabilities/bind.md)
+- Missing → guide user to bind first (see `references/bind.md`)
 
 ## Capability Router
 
 When the user makes a request, determine intent and load the relevant file:
 
-| User Intent | Load | Script |
-|-------------|------|--------|
-| "bind", "connect repo", "unbind", "list domains" | `capabilities/bind.md` | `ls-bind.sh` |
-| "publish", "sync", "deploy" | `capabilities/sync.md` | `ls-sync.sh` |
-| "send email", "send notification", "email someone" | `capabilities/email.md` | `ls-send-email.sh` |
-| "send campaign", "email campaign", "bulk email", "newsletter" | `specs/campaign.md` | (uses sync) |
-| "status", "what's synced" | `capabilities/status.md` | `ls-status.sh` |
+| User Intent | Load | Script (Linux/macOS fallback) |
+|-------------|------|------|
+| "bind", "connect repo", "unbind", "list domains" | `references/bind.md` | `scripts/ls-bind.sh` |
+| "publish", "sync", "deploy" | `references/sync.md` | `scripts/ls-sync.sh` |
+| "send email", "send notification", "email someone" | `references/email.md` | `scripts/ls-send-email.sh` |
+| "send campaign", "email campaign", "bulk email", "newsletter" | `references/campaign.md` | (uses sync) |
+| "status", "what's synced" | `references/status.md` | `scripts/ls-status.sh` |
 
-When the user wants to **write content**, load the relevant spec:
+When the user wants to **write content**, load the relevant reference:
 
 | Content Type | Load | File Extension |
 |-------------|------|----------------|
-| Documentation | `specs/docs.md` | `.md` (in `docs/{lang}/`) |
-| Blog post | `specs/blog.md` | `.md` (in `blog/`) |
-| Changelog | `specs/changelog.md` | `.md` (in `changelog/`) |
-| Website page | `specs/website.md` | `.html` (in `website/`) |
-| Campaign email | `specs/campaign.md` | `.md` (in `campaign/`) |
+| Documentation | `references/docs.md` | `.md` (in `docs/{lang}/`) |
+| Blog post | `references/blog.md` | `.md` (in `blog/`) |
+| Changelog | `references/changelog.md` | `.md` (in `changelog/`) |
+| Website page | `references/website.md` | `.html` (in `website/`) |
+| Campaign email | `references/campaign.md` | `.md` (in `campaign/`) |
 
-After writing → run sync (capabilities/sync.md).
+After writing → run sync (`references/sync.md`).
 
 ## Content Repo Layout
 
 ```
 <content-repo>/
-├── litestartup.yaml          ← Binding config (auto-created by ls-bind.sh)
+├── litestartup.yaml          ← Binding config (auto-created during bind)
 ├── blog/*.md                 ← Blog posts (markdown → HTML by server)
 ├── campaign/*.md             ← Email campaigns (markdown → HTML, sent to tag contacts)
 ├── website/                  ← Website pages (raw HTML, Tailwind CSS)
@@ -70,9 +75,9 @@ After writing → run sync (capabilities/sync.md).
 
 | Code | Meaning | Action |
 |------|---------|--------|
-| 401 | Key expired/invalid | Re-run `ls-bind.sh` |
+| 401 | Key expired/invalid | Re-run bind flow |
 | 403 | Missing scope | Key needs `system.publish` |
-| 404 | No binding | Run `ls-bind.sh` first |
+| 404 | No binding | Run bind first |
 | 409 | Already bound | Informational, not an error |
 | 422 | Sync/parse failed | Check file structure against spec |
 | 429 | Rate limited | Wait. Do NOT auto-retry |
