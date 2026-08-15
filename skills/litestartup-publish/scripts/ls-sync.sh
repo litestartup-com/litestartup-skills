@@ -49,7 +49,7 @@ fi
 cd "$CONFIG_DIR"
 
 # --- Determine what would be staged ---
-CONTENT_DIRS="blog/ website/ docs/ changelog/ campaign/"
+CONTENT_DIRS="blog/ website/ data/ docs/ changelog/ campaign/"
 STAGED_PREVIEW=""
 
 for dir in $CONTENT_DIRS; do
@@ -84,7 +84,7 @@ fi
 # --- Stage + commit ---
 COMMIT_MSG="${COMMIT_MSG:-content: sync $(date +%Y-%m-%d-%H%M)}"
 
-git add -A blog/ website/ docs/ changelog/ campaign/ litestartup.yaml 2>/dev/null || true
+git add -A blog/ website/ data/ docs/ changelog/ campaign/ litestartup.yaml 2>/dev/null || true
 
 if ! git diff --cached --quiet 2>/dev/null; then
     git commit -m "$COMMIT_MSG"

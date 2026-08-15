@@ -62,6 +62,7 @@ After writing → run sync (`references/sync.md`).
 │   ├── *.html                ← Root block pages (/pricing, /about, etc.)
 │   ├── products/*.html       ← Product pages (/products/workmail, etc.)
 │   └── solutions/*.html      ← Solution pages (/solutions/agencies, etc.)
+├── data/*.json               ← JSON data files for data-driven website pages
 ├── changelog/*.md            ← Release changelogs (markdown → HTML)
 └── docs/                     ← Documentation (Litestartup Docs format)
     ├── config.json           ← Docs site config

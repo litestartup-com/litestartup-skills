@@ -26,7 +26,7 @@ Use this when running in a Windows environment where bash is unavailable.
    - Campaign: check `subject` + `from` + `tag` + confirm with user if status is `ready`/`scheduled`
 3. Git commit and push:
    ```powershell
-   git add -A blog/ campaign/ website/ docs/ changelog/ litestartup.yaml
+   git add -A blog/ campaign/ website/ data/ docs/ changelog/ litestartup.yaml
    git commit -m "content: <brief description>"
    git push
    ```
@@ -91,7 +91,7 @@ bash scripts/ls-sync.sh --dry-run
 **Safety model:** Without `--yes`, the script only commits locally. Push + deploy requires explicit `--yes` flag.
 
 With `--yes`, script performs:
-- `git add -A blog/ campaign/ website/ docs/ changelog/ litestartup.yaml`
+- `git add -A blog/ campaign/ website/ data/ docs/ changelog/ litestartup.yaml`
 - `git commit -m "<message>"`
 - `git push`
 - `POST /client/v2/repo-sync/trigger` with commit SHA
@@ -133,7 +133,7 @@ The API accepts an optional `paths` array to sync only specific files:
 - User only changed 1-2 files and wants faster feedback
 - AI detects small change set via `git diff --name-only`
 
-**Path format**: relative from repo root, e.g. `website/products/workmail.html`, `docs/en/guide/quick-start.md`. Must start with `blog/`, `campaign/`, `website/`, `docs/`, or `changelog/`.
+**Path format**: relative from repo root, e.g. `website/products/workmail.html`, `docs/en/guide/quick-start.md`. Must start with `blog/`, `campaign/`, `website/`, `data/`, `docs/`, or `changelog/`.
 
 ## Important Notes
 
