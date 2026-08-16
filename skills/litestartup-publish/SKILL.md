@@ -43,8 +43,8 @@ When the user wants to **write content**, load the relevant reference:
 | Content Type | Load | File Extension |
 |-------------|------|----------------|
 | Documentation | `references/docs.md` | `.md` (in `docs/{lang}/`) |
-| Blog post | `references/blog.md` | `.md` (in `blog/`) |
-| Changelog | `references/changelog.md` | `.md` (in `changelog/`) |
+| Blog post | `references/blog.md` | `.md` (in `blog/`, translations in `blog/{lang}/`) |
+| Changelog | `references/changelog.md` | `.md` (in `changelog/`, translations in `changelog/{lang}/`) |
 | Website page | `references/website.md` | `.html` (in `website/`) |
 | Campaign email | `references/campaign.md` | `.md` (in `campaign/`) |
 
@@ -55,15 +55,20 @@ After writing → run sync (`references/sync.md`).
 ```
 <content-repo>/
 ├── litestartup.yaml          ← Binding config (auto-created during bind)
-├── blog/*.md                 ← Blog posts (markdown → HTML by server)
+├── blog/                     ← Blog posts (markdown → HTML by server)
+│   ├── *.md                  ← Default language → /blog/{slug}
+│   └── {lang}/*.md           ← Translations → /blog/{lang}/{slug}
 ├── campaign/*.md             ← Email campaigns (markdown → HTML, sent to tag contacts)
 ├── website/                  ← Website pages (raw HTML, Tailwind CSS)
 │   ├── index.html            ← Homepage (type: website, full HTML)
 │   ├── *.html                ← Root block pages (/pricing, /about, etc.)
 │   ├── products/*.html       ← Product pages (/products/workmail, etc.)
-│   └── solutions/*.html      ← Solution pages (/solutions/agencies, etc.)
+│   ├── {lang}.html           ← Language root → /{lang} (owns localized partials)
+│   └── {lang}/*.html         ← Localized pages → /{lang}/{page}
 ├── data/*.json               ← JSON data files for data-driven website pages
-├── changelog/*.md            ← Release changelogs (markdown → HTML)
+├── changelog/                ← Release changelogs (markdown → HTML)
+│   ├── *.md                  ← Default language → /changelog
+│   └── {lang}/*.md           ← Translations → /changelog/{lang}
 └── docs/                     ← Documentation (Litestartup Docs format)
     ├── config.json           ← Docs site config
     └── {lang}/               ← Language dirs (en/, zh/, etc.)
@@ -71,6 +76,11 @@ After writing → run sync (`references/sync.md`).
         ├── _sidebar.md       ← Left sidebar
         └── **/*.md           ← Doc pages
 ```
+
+**Language rule**: the language segment follows the module segment — `/blog/zh`,
+`/changelog/zh`, `/docs/zh/...`. The website module has no module segment, so its
+language sits at the site root (`/zh`, `/zh/plugins`). The default language always
+lives in the module root, never in an `en/` directory.
 
 ## Error Codes
 
@@ -91,5 +101,7 @@ After writing → run sync (`references/sync.md`).
 - Auto-retry failed operations
 - Write website pages as markdown (they are HTML)
 - Write docs without `_sidebar.md` (required for navigation)
-- Use query params for language URLs (use path: `/docs/en/...`)
+- Use query params for language URLs (use path: `/docs/en/...`, `/blog/zh`)
+- Put the default language in an `en/` directory (it belongs in the module root)
+- Name a blog post or changelog entry after a language code (`blog/zh.md`)
 - Choose website page type without asking user (website vs block)

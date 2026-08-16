@@ -261,9 +261,15 @@ Subdirectories are fully supported. Nesting depth is unlimited.
 
 ## Multi-language Sites
 
+The platform rule is **`/{module}/{lang}/{rest}`**: the language segment follows
+the module segment (`/blog/zh`, `/changelog/zh`, `/docs/zh/...`). The website
+module has no module segment, so its language sits at the site root instead
+(`/zh`, `/zh/plugins`).
+
 Shared partials (`header` / `menu` / `bottom` / `footer`) come from the page whose
 type is `website`. Besides the site root, **a language root also owns its own set**,
-so a localized site gets a fully localized navigation and footer.
+so a localized site gets a fully localized navigation and footer. Blog and
+changelog pages of that language reuse the same partials.
 
 ### File layout
 
@@ -297,7 +303,8 @@ stays a `block`.
 | 3 | The language root itself also needs a `<!--seo:-->` block for its own `hreflang` |
 | 4 | Use `html_lang` in the SEO comment to set `<html lang="...">` per page |
 | 5 | Add a CJK fallback font stack in the localized root's `<style>` — Latin webfonts have no Chinese/Japanese glyphs |
-| 6 | Blog and changelog are single-locale: link localized navigation to the shared `/blog` |
+| 6 | Link localized navigation to the localized module paths: `/blog/zh`, `/changelog/zh`, `/docs/zh/` |
+| 7 | Content of a language must exist for its path to have anything to show: `/blog/zh` needs `blog/zh/*.md` in the repo |
 
 ```html
 <!--seo:{"title":"...","canonical":"https://x.com/zh/plugins","html_lang":"zh-CN",

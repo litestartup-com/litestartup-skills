@@ -18,6 +18,35 @@ blog/
 
 ---
 
+## Translations
+
+The language segment follows the module segment, same as docs (`/docs/zh/...`).
+Translations live in a language subdirectory; the default language stays in the
+directory root.
+
+```
+blog/
+├── my-first-post.md          → /blog/my-first-post          (default language)
+└── zh/
+    └── my-first-post.md      → /blog/zh/my-first-post        (Chinese)
+```
+
+| # | Rule |
+|---|------|
+| 1 | Keep the default language in `blog/` root — do **not** create an `en/` directory, or `/blog` would be empty |
+| 2 | Use the **same filename** for a translation: matching names pair the two pages and generate `hreflang` automatically |
+| 3 | A post slug must not be a language code (`blog/zh.md` is rejected — it would collide with `/blog/zh`) |
+| 4 | Tags are per language: write Chinese tags in Chinese posts, they are listed only on `/blog/zh` |
+| 5 | Recognised codes: `zh`, `zh-cn`, `zh-tw`, `zh-hk`, `en`, `ja`, `ko`, `es`, `fr`, `de`, `pt`, `pt-br`, `ru`, `it`, `nl`, `tr`, `ar`, `hi`, `id`, `th`, `vi`, `pl`, `sv`, `da`, `fi`, `nb`, `cs`, `uk`, `he`, `ms`. Any other directory is part of the slug |
+| 6 | Nested paths still work inside a language: `blog/zh/guides/intro.md` → `/blog/zh/guides/intro` |
+
+UI text (navigation of the post page, "Back to Blog", reading time, empty state)
+is translated by the server; only the article content comes from the repo. A
+language with no posts shows an empty state linking back to the default language
+instead of silently serving another language.
+
+---
+
 ## Template
 
 ```markdown
@@ -88,5 +117,7 @@ To unpublish: change `status` to `"draft"` and re-sync.
 
 - [ ] `title` is present in frontmatter
 - [ ] `status` is `"published"` (or omitted for default)
-- [ ] No duplicate slugs across blog posts
+- [ ] No duplicate slugs within the same language
+- [ ] Translations reuse the filename of the original post
+- [ ] No post slug equal to a language code
 - [ ] Tags are lowercase, hyphenated if multi-word

@@ -18,6 +18,28 @@ changelog/
 
 ---
 
+## Translations
+
+The language segment follows the module segment: `/changelog` serves the default
+language, `/changelog/zh` its Chinese translation.
+
+```
+changelog/
+├── v0.2.0.md          → /changelog        (default language)
+└── zh/
+    └── v0.2.0.md      → /changelog/zh     (Chinese)
+```
+
+| # | Rule |
+|---|------|
+| 1 | Keep the default language in `changelog/` root — do **not** create an `en/` directory |
+| 2 | Reuse the filename of the original entry so the two versions pair up for `hreflang` |
+| 3 | Keep `tags` in English (`feature`, `bugfix`, …) in every language: the server renders localized labels |
+| 4 | `title` / `date` should match the original entry; only the body is translated |
+| 5 | Same language codes as the rest of the platform (`zh`, `ja`, `pt-br`, …) |
+
+---
+
 ## Template
 
 ```markdown
@@ -68,6 +90,9 @@ tags: ["feature", "bugfix"]
 | `security` | Security patch |
 | `deprecated` | Feature marked for removal |
 
+Tag values stay English in every language; the site displays them translated
+(e.g. `bugfix` → "Bug Fix" / “问题修复”).
+
 ---
 
 ## Content Structure
@@ -106,3 +131,5 @@ When user says "generate changelog from git":
 - [ ] `date` is set to actual release date
 - [ ] Each item is a single bullet with brief description
 - [ ] Breaking changes clearly marked
+- [ ] Translations live in `changelog/{lang}/` and reuse the original filename, title and date
+- [ ] Tags are the English values, even in translated entries

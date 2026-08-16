@@ -133,7 +133,28 @@ The API accepts an optional `paths` array to sync only specific files:
 - User only changed 1-2 files and wants faster feedback
 - AI detects small change set via `git diff --name-only`
 
-**Path format**: relative from repo root, e.g. `website/products/workmail.html`, `docs/en/guide/quick-start.md`. Must start with `blog/`, `campaign/`, `website/`, `data/`, `docs/`, or `changelog/`.
+**Path format**: relative from repo root, e.g. `website/products/workmail.html`, `docs/en/guide/quick-start.md`, `blog/zh/hello.md`. Must start with `blog/`, `campaign/`, `website/`, `data/`, `docs/`, or `changelog/`.
+
+## Language Directories
+
+`blog/`, `changelog/` and `docs/` treat a leading language directory as the
+language of that content, not part of the slug:
+
+| Repo path | Published URL | Stored language |
+|-----------|---------------|-----------------|
+| `blog/hello.md` | `/blog/hello` | default |
+| `blog/zh/hello.md` | `/blog/zh/hello` | `zh` |
+| `changelog/v1.0.0.md` | `/changelog` | default |
+| `changelog/zh/v1.0.0.md` | `/changelog/zh` | `zh` |
+| `docs/zh/guide/intro.md` | `/docs/zh/guide/intro` | `zh` |
+| `website/zh/plugins.html` | `/zh/plugins` | (part of the page path) |
+
+- The same slug may exist once per language, so moving a file into `blog/zh/`
+  creates a new page and the old one is reported under `needs_confirm`
+- A slug equal to a language code (`blog/zh.md`) is rejected and reported in
+  `synced.errors`
+- Only recognised codes count as a language; `blog/ai/agents.md` stays the slug
+  `ai/agents`
 
 ## Important Notes
 
