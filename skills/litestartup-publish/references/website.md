@@ -259,6 +259,53 @@ Subdirectories are fully supported. Nesting depth is unlimited.
 
 ---
 
+## Multi-language Sites
+
+Shared partials (`header` / `menu` / `bottom` / `footer`) come from the page whose
+type is `website`. Besides the site root, **a language root also owns its own set**,
+so a localized site gets a fully localized navigation and footer.
+
+### File layout
+
+```
+website/
+├── index.html                ← type: website → / (English partials)
+├── plugins.html              ← type: block   → /plugins
+├── zh.html                   ← type: website → /zh (Chinese partials)
+└── zh/
+    ├── plugins.html          ← type: block   → /zh/plugins
+    └── guides/
+        └── integration.html  ← type: block   → /zh/guides/integration
+```
+
+`zh.html` is a **complete page** (full `<head>`, `<header>`, `<footer>`) because it
+produces the Chinese partials, written to `templates/{domainSlug}/zh/`. Pages under
+`/zh/` then render with those partials; any partial missing from the language
+directory falls back to the base one, so a partially translated site still renders.
+
+Recognised language roots: `zh`, `zh-cn`, `zh-tw`, `zh-hk`, `en`, `ja`, `ko`, `es`,
+`fr`, `de`, `pt`, `pt-br`, `ru`, `it`, `nl`, `tr`, `ar`, `hi`, `id`, `th`, `vi`,
+`pl`, `sv`, `da`, `fi`, `nb`, `cs`, `uk`, `he`, `ms`. Any other single-segment page
+stays a `block`.
+
+### Rules
+
+| # | Rule |
+|---|------|
+| 1 | Data files (`data/*.json`) are shared across languages — one `plugins.json` serves `/plugins` and `/zh/plugins` |
+| 2 | Put `hreflang` in each page's SEO comment, **never** as static `<link>` tags in the language root's `<head>` — the head is shared, so every child page would inherit the root's alternates |
+| 3 | The language root itself also needs a `<!--seo:-->` block for its own `hreflang` |
+| 4 | Use `html_lang` in the SEO comment to set `<html lang="...">` per page |
+| 5 | Add a CJK fallback font stack in the localized root's `<style>` — Latin webfonts have no Chinese/Japanese glyphs |
+| 6 | Blog and changelog are single-locale: link localized navigation to the shared `/blog` |
+
+```html
+<!--seo:{"title":"...","canonical":"https://x.com/zh/plugins","html_lang":"zh-CN",
+"hreflang":{"en":"https://x.com/plugins","zh-CN":"https://x.com/zh/plugins","x-default":"https://x.com/plugins"}}-->
+```
+
+---
+
 ## Data-Driven Templates (Twig)
 
 Pages that need dynamic data (e.g., plugin listings, model catalogs) use Twig template syntax
