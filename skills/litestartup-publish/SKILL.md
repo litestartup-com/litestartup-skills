@@ -6,7 +6,7 @@ description: >
   write a blog post, send an email, or bind a content repository.
 metadata:
   author: litestartup-com
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # LiteStartup Publish Skill
@@ -29,6 +29,24 @@ Check for `litestartup.yaml` in workspace.
     hosted Git (private repo, push-to-publish, no GitHub/OAuth) — see `references/create.md`
   - **Bring your own GitHub public repo**: bind it — see `references/bind.md`
 
+## Shared conventions (read FIRST, every time)
+
+Before writing or editing **any** content — website, blog, docs, changelog, campaigns,
+and any future content type — load these two repo-root files and apply them:
+
+- **`shared.yml`** — the single source of truth for facts: identity (name/tagline),
+  `facts` (product_version, pricing, urls, contact), and `terminology`. Use these values
+  verbatim; never hardcode a fact that lives here, and never contradict another page.
+- **`content-guide.md`** — voice, tone, terminology usage, and formatting conventions.
+
+Both live at the repo root, are version-controlled, and are **non-secret** (API keys stay
+in `~/.litestartup/credentials`, never in the repo). They are metadata — the server never
+publishes them. If they are missing (older repo), offer to create them from
+`assets/shared.yml` + `assets/content-guide.md`.
+
+See `references/shared-conventions.md` for the field reference and the sync-time
+consistency check.
+
 ## Capability Router
 
 When the user makes a request, determine intent and load the relevant file:
@@ -41,6 +59,7 @@ When the user makes a request, determine intent and load the relevant file:
 | "send email", "send notification", "email someone" | `references/email.md` | `scripts/ls-send-email.sh` |
 | "send campaign", "email campaign", "bulk email", "newsletter" | `references/campaign.md` | (uses sync) |
 | "status", "what's synced" | `references/status.md` | `scripts/ls-status.sh` |
+| "keep content consistent", "update pricing/version everywhere", shared facts/voice | `references/shared-conventions.md` | (shared.yml + content-guide.md) |
 
 When the user wants to **write content**, load the relevant reference:
 
@@ -100,6 +119,8 @@ lives in the module root, never in an `en/` directory.
 ## DO NOT
 
 - Read or display API keys
+- Write content without first applying `shared.yml` + `content-guide.md`
+- Put secrets (API keys) in `shared.yml` or anywhere in the repo
 - Modify files outside the content repo
 - Auto-publish without `git push`
 - Auto-retry failed operations

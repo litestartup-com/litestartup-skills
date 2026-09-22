@@ -24,9 +24,13 @@ Use this when running in a Windows environment where bash is unavailable.
    - Website: check structure matches type (website/block)
    - Changelog: check `title` + `date`
    - Campaign: check `subject` + `from` + `tag` + confirm with user if status is `ready`/`scheduled`
-3. Git commit and push:
+   - **Consistency check (advisory)**: scan changed content for facts that contradict
+     `shared.yml` (prices/plan names vs `facts.pricing`, version vs `facts.product_version`,
+     non-canonical terms under `terminology[].avoid`). Warn the user on a mismatch (or update
+     `shared.yml` if the fact changed). Do not block the sync. See `references/shared-conventions.md`.
+3. Git commit and push (shared files are versioned, not published):
    ```powershell
-   git add -A blog/ campaign/ website/ data/ docs/ changelog/ litestartup.yaml
+   git add -A blog/ campaign/ website/ data/ docs/ changelog/ litestartup.yaml shared.yml content-guide.md
    git commit -m "content: <brief description>"
    git push
    ```

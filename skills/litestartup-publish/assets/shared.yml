@@ -1,0 +1,23 @@
+# Shared content facts — the single source of truth for this site.
+# Referenced by every content type (website, blog, docs, changelog) and by the
+# LiteStartup Skill when writing content, so facts stay consistent everywhere.
+# NON-SECRET only. Never put API keys here (they live in ~/.litestartup/credentials).
+version: 1
+
+identity:
+  name: ""                     # e.g. Acme
+  tagline: ""                  # short one-liner
+  description: ""              # 1–2 sentence description
+
+facts:
+  product_version: ""          # e.g. v1.0.0
+  pricing: {}                  # e.g. { free: "$0", pro: "$12/mo" }
+  urls:
+    website: ""                # e.g. https://acme.com
+    docs: ""                   # e.g. https://acme.com/docs
+    app: ""
+  contact:
+    email: ""
+
+# Canonical terms — keep naming consistent across all content.
+terminology: []                # e.g. - { use: "AI Gateway", avoid: ["AI stack"] }
