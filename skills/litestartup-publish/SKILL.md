@@ -6,7 +6,7 @@ description: >
   write a blog post, send an email, or bind a content repository.
 metadata:
   author: litestartup-com
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # LiteStartup Publish Skill
@@ -24,7 +24,10 @@ Git repo is the source of truth → sync to production in one command.
 
 Check for `litestartup.yaml` in workspace.
 - Found → this is the content repo, proceed with requested action
-- Missing → guide user to bind first (see `references/bind.md`)
+- Missing → the user has no content repo yet. Offer two paths:
+  - **Default (recommended, one key only)**: create an LS-managed site on LiteStartup's
+    hosted Git (private repo, push-to-publish, no GitHub/OAuth) — see `references/create.md`
+  - **Bring your own GitHub public repo**: bind it — see `references/bind.md`
 
 ## Capability Router
 
@@ -32,6 +35,7 @@ When the user makes a request, determine intent and load the relevant file:
 
 | User Intent | Load | Script (Linux/macOS fallback) |
 |-------------|------|------|
+| "launch/create a site", "new website/blog/docs", "start a site", "register domain + site" | `references/create.md` | (REST API; managed Gitea — default path) |
 | "bind", "connect repo", "unbind", "list domains" | `references/bind.md` | `scripts/ls-bind.sh` |
 | "publish", "sync", "deploy" | `references/sync.md` | `scripts/ls-sync.sh` |
 | "send email", "send notification", "email someone" | `references/email.md` | `scripts/ls-send-email.sh` |
@@ -54,7 +58,7 @@ After writing → run sync (`references/sync.md`).
 
 ```
 <content-repo>/
-├── litestartup.yaml          ← Binding config (auto-created during bind)
+├── litestartup.yaml          ← Binding config (created by `create` for managed, or `bind` for BYO)
 ├── blog/                     ← Blog posts (markdown → HTML by server)
 │   ├── *.md                  ← Default language → /blog/{slug}
 │   └── {lang}/*.md           ← Translations → /blog/{lang}/{slug}
@@ -86,9 +90,9 @@ lives in the module root, never in an `en/` directory.
 
 | Code | Meaning | Action |
 |------|---------|--------|
-| 401 | Key expired/invalid | Re-run bind flow |
+| 401 | Key expired/invalid | Re-store a valid key (see create/bind) |
 | 403 | Missing scope | Key needs `system.publish` |
-| 404 | No binding | Run bind first |
+| 404 | No binding | Create a managed site (`create.md`) or bind a repo (`bind.md`) |
 | 409 | Already bound | Informational, not an error |
 | 422 | Sync/parse failed | Check file structure against spec |
 | 429 | Rate limited | Wait. Do NOT auto-retry |

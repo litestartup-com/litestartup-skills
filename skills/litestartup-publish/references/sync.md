@@ -58,20 +58,37 @@ Use this when running in a Windows environment where bash is unavailable.
    if ($r.data.conflicts.Count -gt 0) { $r.data.conflicts | ConvertTo-Json -Depth 3 }
    ```
 
+### Deletions (GitOps desired-state)
+
+The repo is the desired state: removing a content file and syncing **soft-unpublishes**
+that page automatically (recoverable — re-add the file + sync to bring it back live).
+The response lists these under `unpublished`. Managed-Gitea repos do this on push
+automatically (no action needed).
+
+**Mass-deletion safety valve**: if a single sync would unpublish an abnormally large
+slice of the site (> 25% of pages **and** ≥ 5 pages — e.g. a deleted directory or wrong
+branch), the server does NOT auto-unpublish. Instead it returns `needs_confirm` (the list)
+plus a `needs_confirm_token`.
+
 ### Handling `needs_confirm`
 
-If response contains `needs_confirm` items, **only report them to the user**. Do NOT call the confirm API automatically.
+If the response contains `needs_confirm`, **show the list to the user and ask them to
+confirm**. Do NOT confirm automatically.
 
 Report format:
 ```
-⚠️ Server detected files that may need deletion:
-  - [action] [path] (resource_type: [type])
-Please handle manually in the LiteStartup dashboard, or remove/add the file in your repo and re-sync.
+⚠️ This sync would unpublish N pages (over the safety threshold):
+  - [path] (resource_type: [type])
+Confirm to proceed? (these can be restored later by re-adding the files)
 ```
 
-Common scenarios:
-- `delete_doc` — .md file removed from repo, server asks to confirm deletion
-- `unpublish` — content file removed, server asks to confirm unpublishing
+Only if the user explicitly says yes, call:
+```
+POST <endpoint>/client/v2/repo-sync/confirm
+Body: { "confirm_token": "<needs_confirm_token from the sync response>" }
+```
+Response: `{ unpublished: [...], count: N }`. The token is short-lived (~1h); if it expired,
+re-run sync to get a fresh one. Unpublish is soft (recoverable) — never a hard delete.
 
 ---
 

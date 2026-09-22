@@ -1,6 +1,10 @@
-# Capability: Bind / Unbind Repo
+# Capability: Bind / Unbind Repo (bring-your-own GitHub public repo)
 
-> **Trigger**: User says "bind to litestartup", "connect repo", "unbind", or no `litestartup.yaml` found.
+> **Trigger**: User explicitly says "bind to litestartup", "connect my repo", "unbind", "list domains".
+> **This is the fallback path** for users who want to keep their content in their own
+> **public** GitHub/GitLab/Gitee repo. The **default/recommended** path is an LS-managed
+> private repo (one API key, push-to-publish) — see `references/create.md`. If no
+> `litestartup.yaml` exists, prefer `create` unless the user asks to use their own repo.
 > **Script (fallback)**: `scripts/ls-bind.sh` (Linux/macOS only)
 
 ## Bind Flow
