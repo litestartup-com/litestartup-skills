@@ -20,6 +20,8 @@ For "bring your own GitHub public repo" instead, see `bind.md`.
    Authorization: Bearer <LS_API_KEY>
    Body: { "domain": "acme.com" }        # or { "domain_slug": "acme" }; optional "theme": "minimal"
    ```
+   Add `"go_live": true` to take the site live in the same call (creates the website/blog/docs
+   routing + Cloudflare CNAME); the response then includes a `go_live` block. See `go-live.md`.
 3. Response returns the **proxy clone URL** (never a raw Gitea URL):
    ```
    { "binding_id": ..., "repo_url": "https://git.litestartup.com/team-<id>/acme.git",
@@ -46,6 +48,13 @@ git config credential.helper '!f() { echo "username=x"; echo "password=$(cat ~/.
 
 - The key is read on demand; it is never stored in the repo or echoed to the agent.
 - NEVER print, cat, or display the key in conversation.
+
+## Go live (make it reachable)
+
+Creating the repo provisions content but does **not** by itself make `https://<domain>`
+resolve. Either pass `"go_live": true` above, or after creating call `sites/go-live` and
+(optionally) add an inbox — see `go-live.md`. Default services are website + blog + docs +
+changelog, all on the same host.
 
 ## Notes
 

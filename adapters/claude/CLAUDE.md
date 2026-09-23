@@ -41,6 +41,9 @@ Read `skills/litestartup-publish/references/sync.md` for environment-aware sync:
 
 ## Quick Routing
 
+- Connect / onboarding (no key yet at `~/.litestartup/credentials`) → `skills/litestartup-publish/references/init.md`
+- Register a domain (charges balance — confirm first) → `skills/litestartup-publish/references/domain.md`
+- Go live / add inbox → `skills/litestartup-publish/references/go-live.md`
 - Bind repo → `skills/litestartup-publish/references/bind.md`
 - Sync/publish → `skills/litestartup-publish/references/sync.md`
 - Write docs → `skills/litestartup-publish/references/docs.md`

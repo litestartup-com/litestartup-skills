@@ -7,7 +7,7 @@ You have access to the LiteStartup skills suite.
 
 | Skill | Intent | Entry Point |
 |-------|--------|-------------|
-| litestartup-publish | "publish", "sync", "write blog/docs/website/changelog", "send email", "bind repo" | `skills/litestartup-publish/SKILL.md` |
+| litestartup-publish | "connect/onboard", "register domain", "go live", "publish", "sync", "write blog/docs/website/changelog", "send email", "bind repo" | `skills/litestartup-publish/SKILL.md` |
 | litestartup-admin | "init saas", "create project", "scaffold", "configure", "deploy" | `skills/litestartup-admin/SKILL.md` |
 
 When the user makes a request, match intent to the table above, then read the corresponding SKILL.md for detailed routing.

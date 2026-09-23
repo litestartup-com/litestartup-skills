@@ -11,13 +11,13 @@ Modular AI skill packages for LiteStartup.
 
 | Skill | Intent | Entry Point |
 |-------|--------|-------------|
-| litestartup-publish | publish, sync, write blog/docs/website/changelog, send email, bind repo | `skills/litestartup-publish/SKILL.md` |
+| litestartup-publish | connect/onboard, register domain, go live, publish, sync, write blog/docs/website/changelog, send email, bind repo | `skills/litestartup-publish/SKILL.md` |
 | litestartup-admin | init saas, create project, scaffold, configure, deploy | `skills/litestartup-admin/SKILL.md` |
 
 ## File References
 
 - Publish Skill: `skills/litestartup-publish/SKILL.md`
-  - References: `skills/litestartup-publish/references/{bind,sync,email,status,docs,blog,website,changelog,campaign}.md`
+  - References: `skills/litestartup-publish/references/{init,domain,go-live,create,bind,sync,email,status,docs,blog,website,changelog,campaign}.md`
   - Assets: `skills/litestartup-publish/assets/`
   - Scripts: `skills/litestartup-publish/scripts/` (Linux/macOS fallback)
 - Admin Skill: `skills/litestartup-admin/SKILL.md`

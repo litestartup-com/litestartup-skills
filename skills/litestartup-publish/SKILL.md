@@ -6,7 +6,7 @@ description: >
   write a blog post, send an email, or bind a content repository.
 metadata:
   author: litestartup-com
-  version: "1.2.0"
+  version: "1.3.0"
 ---
 
 # LiteStartup Publish Skill
@@ -22,7 +22,11 @@ Git repo is the source of truth → sync to production in one command.
 
 ## Prerequisites
 
-Check for `litestartup.yaml` in workspace.
+**First, ensure a key exists.** If `~/.litestartup/credentials` is missing or empty, the user
+hasn't connected to LiteStartup yet → run `references/init.md` (terminal onboarding: email →
+claim code → key, no browser) before doing anything else. Never ask the user to paste a key.
+
+Then check for `litestartup.yaml` in workspace.
 - Found → this is the content repo, proceed with requested action
 - Missing → the user has no content repo yet. Offer two paths:
   - **Default (recommended, one key only)**: create an LS-managed site on LiteStartup's
@@ -53,7 +57,10 @@ When the user makes a request, determine intent and load the relevant file:
 
 | User Intent | Load | Script (Linux/macOS fallback) |
 |-------------|------|------|
+| "connect", "sign up", "get me a key", no key yet at `~/.litestartup/credentials` | `references/init.md` | (public onboarding; REST) |
+| "register a domain", "buy acme.com", "get me a domain" | `references/domain.md` | (REST; charges balance — confirm first) |
 | "launch/create a site", "new website/blog/docs", "start a site", "register domain + site" | `references/create.md` | (REST API; managed Gitea — default path) |
+| "go live", "launch the site", "make it reachable", "add an inbox / email address" | `references/go-live.md` | (REST API) |
 | "bind", "connect repo", "unbind", "list domains" | `references/bind.md` | `scripts/ls-bind.sh` |
 | "publish", "sync", "deploy" | `references/sync.md` | `scripts/ls-sync.sh` |
 | "send email", "send notification", "email someone" | `references/email.md` | `scripts/ls-send-email.sh` |
@@ -109,10 +116,12 @@ lives in the module root, never in an `en/` directory.
 
 | Code | Meaning | Action |
 |------|---------|--------|
-| 401 | Key expired/invalid | Re-store a valid key (see create/bind) |
+| 401 | Key expired/invalid | Re-connect via `init.md`, or re-store a valid key |
+| 402 | Insufficient balance (domain purchase) | Tell user to top up; do NOT auto-retry |
 | 403 | Missing scope | Key needs `system.publish` |
 | 404 | No binding | Create a managed site (`create.md`) or bind a repo (`bind.md`) |
-| 409 | Already bound | Informational, not an error |
+| 409 | Already bound / pending order | Informational, not an error; do NOT double-charge |
+| 410 | Onboarding code expired/used | Request a new code (`init.md`) |
 | 422 | Sync/parse failed | Check file structure against spec |
 | 429 | Rate limited | Wait. Do NOT auto-retry |
 

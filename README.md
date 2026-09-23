@@ -15,7 +15,7 @@ Your AI editor writes great code — but publishing content still requires dashb
 
 | Skill | Description | Directory |
 |-------|-------------|-----------|
-| **Publish** | Publish blog, docs, website, changelog, and send campaign emails from your AI editor | `skills/litestartup-publish/` |
+| **Publish** | Connect (terminal onboarding), register a domain, take a site live, publish blog/docs/website/changelog, and send emails — all from your AI editor | `skills/litestartup-publish/` |
 | **Admin** | Initialize, configure and deploy SaaS applications using litesaas-admin boilerplate | `skills/litestartup-admin/` |
 
 More skills coming soon: video-generator, deploy.

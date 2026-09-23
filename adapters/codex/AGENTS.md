@@ -23,6 +23,9 @@ This workspace is connected to [LiteStartup](https://litestartup.com) via the Li
 
 | User wants to... | Read |
 |-----------------|------|
+| Connect / onboard (no key yet) | `skills/litestartup-publish/references/init.md` |
+| Register a domain (charges balance) | `skills/litestartup-publish/references/domain.md` |
+| Go live / add an inbox | `skills/litestartup-publish/references/go-live.md` |
 | Bind/connect repo | `skills/litestartup-publish/references/bind.md` |
 | Publish/sync content | `skills/litestartup-publish/references/sync.md` |
 | Write docs | `skills/litestartup-publish/references/docs.md` |
