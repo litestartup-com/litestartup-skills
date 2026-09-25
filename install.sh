@@ -5,6 +5,7 @@
 #   curl -fsSL ... | bash -s -- --skill litestartup-publish
 #   curl -fsSL ... | bash -s -- --editor windsurf
 #   curl -fsSL ... | bash -s -- --skill litestartup-publish --editor cursor
+#   curl -fsSL ... | bash -s -- --update [--skill litestartup-publish] [--dir litestartup-skills]
 
 set -euo pipefail
 
@@ -12,6 +13,7 @@ REPO_URL="https://github.com/litestartup-com/litestartup-skills.git"
 INSTALL_DIR="litestartup-skills"
 SKILL=""
 EDITOR=""
+UPDATE=""
 
 # --- Parse arguments ---
 while [[ $# -gt 0 ]]; do
@@ -19,14 +21,32 @@ while [[ $# -gt 0 ]]; do
         --skill) SKILL="$2"; shift 2 ;;
         --editor) EDITOR="$2"; shift 2 ;;
         --dir) INSTALL_DIR="$2"; shift 2 ;;
+        --update) UPDATE=1; shift ;;
         *) echo "Unknown option: $1"; exit 1 ;;
     esac
 done
 
-echo "🚀 Installing LiteStartup Skills..."
+if [ -n "$UPDATE" ]; then
+    echo "🔄 Updating LiteStartup Skills..."
+else
+    echo "🚀 Installing LiteStartup Skills..."
+fi
 
-# --- Clone ---
-if [ -n "$SKILL" ]; then
+# --- Clone or update ---
+if [ -n "$UPDATE" ]; then
+    if [ ! -d "$INSTALL_DIR/.git" ]; then
+        echo "❌ No existing install at $INSTALL_DIR. Run without --update first."
+        exit 1
+    fi
+    cd "$INSTALL_DIR"
+    if [ -n "$SKILL" ]; then
+        echo "📦 Ensuring sparse checkout includes: $SKILL"
+        git sparse-checkout set "skills/$SKILL" "adapters" "README.md" "RULE.md" "AGENT_SKILLS_SPEC.md" "install.sh"
+    fi
+    git fetch --depth 1 origin main
+    git reset --hard FETCH_HEAD
+    echo "✅ Updated to $(git log -1 --format='%h %s')"
+elif [ -n "$SKILL" ]; then
     echo "📦 Installing skill: $SKILL (sparse checkout)"
     git clone --filter=blob:none --sparse "$REPO_URL" "$INSTALL_DIR" 2>/dev/null
     cd "$INSTALL_DIR"
