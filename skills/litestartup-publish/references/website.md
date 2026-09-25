@@ -58,6 +58,8 @@ Full independent HTML with complete structure. Server splits into 5 .phtml parts
     <style>
         /* Shared CSS classes: .card, .btn-primary, .fade-in, etc. */
         /* These are available to ALL child pages via header.phtml */
+        /* Keep this to SHARED classes only — blog/changelog also inherit this <head>
+           and carry their own Tailwind, so element selectors here will clash. */
     </style>
 </head>
 <body>
@@ -179,7 +181,7 @@ At render time:
 |---|------|-----------|
 | 1 | Use Tailwind classes or `style=""` inline | Both |
 | 2 | NEVER put `<style>` in `<head>` (gets replaced by parent for block) | Block |
-| 3 | Page-specific JS goes inside `<main>` in `<script>` tags | Both |
+| 3 | Page-specific JS **and CSS** go inside `<main>` (the website `<head>` is shared with blog/changelog, which carry their own Tailwind — keep head styles to shared classes only) | Both |
 | 4 | NEVER put `<script>` outside `<main>` (except in website type's footer area) | Block |
 | 5 | Use `<header><!-- header placeholder --></header>` exactly | Block |
 | 6 | Use `<footer><!-- footer placeholder --></footer>` exactly | Block |
