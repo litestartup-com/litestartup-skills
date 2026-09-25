@@ -39,14 +39,25 @@ For "bring your own GitHub public repo" instead, see `bind.md`.
 ## Security — credential helper (key stays in ~/.litestartup/credentials)
 
 Do NOT put the API key in the clone URL or `.git/config`. Configure git to read it from the
-existing credentials file at auth time:
+credentials file at auth time (one-time, inside the cloned repo, or global for the host):
 
 ```bash
-# One-time, inside the cloned repo (or global for the git.litestartup.com host):
-git config credential.helper '!f() { echo "username=x"; echo "password=$(cat ~/.litestartup/credentials)"; }; f'
+git config credential.helper '!f(){ echo username=x; echo "password=$(cat "$HOME/.litestartup/credentials" | tr -d "\r\n")"; }; f'
 ```
 
-- The key is read on demand; it is never stored in the repo or echoed to the agent.
+`tr -d "\r\n"` strips Windows line endings from the key file — without it the key gets a
+trailing `\r` and auth fails with 401.
+
+**Windows (Git for Windows)**: its bundled Git Credential Manager (GCM) runs before custom
+helpers and would pop an interactive prompt (or hang headless) for `git.litestartup.com`.
+Reset the helper list first so GCM is skipped:
+
+```powershell
+git config credential.helper ""
+git config --add credential.helper '!f(){ echo username=x; echo "password=$(cat "$HOME/.litestartup/credentials" | tr -d "\r\n")"; }; f'
+```
+
+- The key is read on demand; never stored in the repo, `.git/config`, or a credential manager.
 - NEVER print, cat, or display the key in conversation.
 
 ## Go live (make it reachable)
@@ -60,6 +71,9 @@ changelog, all on the same host.
 
 - Managed repos are **private**; only LS can read them internally for publishing.
 - Push publishes automatically; use `status.md` to check sync results if needed.
+- Creating while the domain is still `pending` verification works, but returns a placeholder
+  `*.litestartup.net` `app_url` with `is_custom_domain: false`. After the domain is `verified`,
+  run `sites/go-live` (see `go-live.md`) to attach the custom domain.
 - To migrate later or keep a copy on GitHub, that's a future option — not required.
 
 ## Error Codes

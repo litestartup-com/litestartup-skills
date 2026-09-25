@@ -58,7 +58,10 @@ DNS work. Verification is asynchronous.
 GET /client/v2/domains/status?domain=acme.com
 ```
 Response `data` = `{ order_status, cf_state, domain_status, domain_slug, error }`. Poll
-until `domain_status` = `verified`. Only then can you create inboxes (`go-live.md`).
+until `domain_status` = `verified` (transitions: `managed_setup → pending → verified`,
+usually a few minutes). Gate next steps on `domain_status` only — `order_status` can still
+read `registering` after verification; don't wait for it. Only once `verified` can you
+create inboxes (`go-live.md`).
 
 ## Next
 

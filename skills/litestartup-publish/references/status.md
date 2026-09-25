@@ -16,11 +16,12 @@
 ## Output Format
 
 ```
-✅ Bound to: https://github.com/user/content-repo
-   Endpoint: https://api.litestartup.com
-   Last sync: 2026-05-28 14:30:00 UTC
-   Total syncs: 12
-   Conflicts: 0
+✅ Binding ID:  1906
+   Repo URL:    https://git.litestartup.com/team-1/xxx.git
+   Last Sync:   2026-05-28 14:30:00
+   Last SHA:    6c565fc80ad4...
+   Sync Count:  12
+   Last Error:  (only shown when non-empty)
 ```
 
 ## Error Scenarios
