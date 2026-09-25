@@ -38,19 +38,40 @@ Language is always in the URL path, never as a query parameter.
 
 ## config.json
 
+Use the **full schema** (as generated for real deployments):
+
 ```json
 {
   "site": {
+    "name": "My Docs",
     "title": "My Documentation",
-    "description": "Official documentation for My SaaS"
+    "description": "Official documentation for My SaaS",
+    "keywords": ["docs"],
+    "logo": "",
+    "favicon": ""
   },
   "locales": {
     "default": "en",
-    "available": ["en"]
+    "available": ["en", "zh"]
   },
   "theme": {
     "primary_color": "#3b82f6",
     "dark_mode": true
+  },
+  "seo": {
+    "canonical_base": "https://www.example.com",
+    "og_image": "",
+    "twitter_site": ""
+  },
+  "links": {
+    "github": "",
+    "twitter": "",
+    "discord": "",
+    "website": "https://www.example.com"
+  },
+  "analytics": {
+    "google_analytics_id": "",
+    "google_tag_manager_id": ""
   },
   "footer": {
     "copyright": "© 2026 My Company"
@@ -65,7 +86,17 @@ Language is always in the URL path, never as a query parameter.
 - `locales.available` — Array of language codes with content
 - `theme.primary_color` — Hex color for accent elements
 - `theme.dark_mode` — Enable dark mode toggle (true/false)
+- `seo.canonical_base` — Use the **www** host (`https://www.example.com`) — the root domain 301-redirects to `www`
 - `footer.copyright` — Footer copyright text
+
+### Multi-language (IMPORTANT)
+
+- Language roots come from **`locales.available` + a matching `docs/{lang}/` directory**. If
+  `/docs/{lang}/` 404s while `/docs/{lang}/page` still renders, the locale isn't registered.
+- The legacy scaffold config (`{"name", "languages", "default_language"}`) does **not**
+  register languages — only the default works. Replace it with the full schema above.
+- New locales can take **up to 1 hour** to register (server config cache). Don't loop or
+  re-sync — verify again later.
 
 ---
 

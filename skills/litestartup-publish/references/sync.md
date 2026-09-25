@@ -71,8 +71,8 @@ automatically (no action needed).
 
 **Mass-deletion safety valve**: if a single sync would unpublish an abnormally large
 slice of the site (> 25% of pages **and** ≥ 5 pages — e.g. a deleted directory or wrong
-branch), the server does NOT auto-unpublish. Instead it returns `needs_confirm` (the list)
-plus a `needs_confirm_token`.
+branch), the server does NOT auto-unpublish. Instead it returns `needs_confirm` (the list);
+DB-backed modules (blog/changelog/website) also return a `needs_confirm_token`.
 
 ### Handling `needs_confirm`
 
@@ -93,6 +93,11 @@ Body: { "confirm_token": "<needs_confirm_token from the sync response>" }
 ```
 Response: `{ unpublished: [...], count: N }`. The token is short-lived (~1h); if it expired,
 re-run sync to get a fresh one. Unpublish is soft (recoverable) — never a hard delete.
+
+**Docs deletions have NO confirm token** (docs sync is file-to-file, not DB). The confirm
+endpoint rejects them. The reliable way to delete many docs pages: commit the deletions in
+**small batches below the threshold (< 25% and < 5 pages per sync)** — each batch then
+soft-unpublishes automatically. Restoring the files first clears any pending withheld state.
 
 ---
 

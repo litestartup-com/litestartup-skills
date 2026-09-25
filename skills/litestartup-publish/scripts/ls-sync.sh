@@ -151,7 +151,7 @@ try:
         for c in conflicts: print(f'   ! {c[\"path\"]} (backend modified after last sync)')
     if needs_confirm:
         print(f'❓ Needs confirm ({len(needs_confirm)}):')
-        for n in needs_confirm: print(f'   ? {n[\"path\"]} → run ls-unpublish.sh to remove from live site')
+        for n in needs_confirm: print(f'   ? {n[\"path\"]} → docs: delete in small batches (<25% and <5/sync); other modules: confirm via /repo-sync/confirm (see references/sync.md)')
     if urls:
         print()
         print('Live URLs:')

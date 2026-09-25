@@ -58,6 +58,9 @@ auto-publish on push; see `create.md` / `sync.md`).
   briefly, wait and retry the URL (do not re-run go-live in a loop).
 - `dns.created: false` with `reason: "zone_or_config_missing"` means the managed DNS zone
   isn't ready yet — the domain may still be finishing verification; retry after it's verified.
+- **Canonical host is `www`**: the root domain 301-redirects to `www.<domain>` by default.
+  Use the `www` host in website SEO `canonical`/`hreflang`, `docs/config.json`
+  `seo.canonical_base`, and `shared.yml` URLs (both hosts still work, `www` is canonical).
 
 ## Error Scenarios
 
