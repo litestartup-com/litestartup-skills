@@ -5,13 +5,16 @@
 
 ## Flow
 
-1. Run `bash scripts/ls-status.sh` (or agent calls the API directly)
-2. Display to user:
-   - Binding status (bound/unbound)
-   - Repo URL
-   - Last sync time
-   - Sync count
-   - Any pending conflicts
+The bash script is a Linux/macOS fallback; call the API directly on Windows (or anywhere):
+
+```powershell
+$key = (Get-Content "$env:USERPROFILE\.litestartup\credentials" -Raw).Trim()
+Invoke-RestMethod -Uri "https://api.litestartup.com/client/v2/repo-sync/status" `
+  -Headers @{ Authorization = "Bearer $key" } -Method Get
+```
+
+Display `data`: `binding_id`, `repo_url`, `last_synced_at`, `last_synced_sha`, `sync_count`,
+`last_error` (only when set).
 
 ## Output Format
 

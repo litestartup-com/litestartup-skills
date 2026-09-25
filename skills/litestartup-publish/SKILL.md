@@ -6,7 +6,7 @@ description: >
   write a blog post, send an email, or bind a content repository.
 metadata:
   author: litestartup-com
-  version: "1.3.1"
+  version: "1.3.2"
 ---
 
 # LiteStartup Publish Skill
@@ -67,6 +67,9 @@ When the user makes a request, determine intent and load the relevant file:
 | "send campaign", "email campaign", "bulk email", "newsletter" | `references/campaign.md` | (uses sync) |
 | "status", "what's synced" | `references/status.md` | `scripts/ls-status.sh` |
 | "keep content consistent", "update pricing/version everywhere", shared facts/voice | `references/shared-conventions.md` | (shared.yml + content-guide.md) |
+
+Scripts are Linux/macOS fallbacks. On Windows, call the REST API directly — each reference
+documents the agent-native path.
 
 When the user wants to **write content**, load the relevant reference:
 

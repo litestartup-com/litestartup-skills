@@ -30,6 +30,16 @@
    - Removes `litestartup.yaml` if it matches the unbound slug
 3. Confirm success: "Unbound successfully."
 
+## Agent-Native (Windows / REST)
+
+`ls-bind.sh` is a Linux/macOS fallback. On Windows (or agent sessions without bash), run the
+same flow via REST with `Authorization: Bearer <key from ~/.litestartup/credentials, never displayed>`:
+
+1. List domains: `GET /client/v2/repo-sync/domains` → pick `domain_slug` (ask the user when several match)
+2. Bind: `POST /client/v2/repo-sync/bind` body `{ "repo_url": "...", "domain_slug": "..." }`
+3. Write `litestartup.yaml` from the response (`binding_id`, `domain`, `domain_slug`, `endpoint`, `repo_url`)
+4. Unbind: `DELETE /client/v2/repo-sync/binding` body `{ "domain_slug": "..." }`; delete the matching `litestartup.yaml`
+
 ## Prerequisites
 
 - Git repo initialized with a remote (GitHub/GitLab/Gitee)

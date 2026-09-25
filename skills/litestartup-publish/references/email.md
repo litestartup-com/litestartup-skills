@@ -12,6 +12,17 @@
 
 **Rule: Always use notification endpoint unless user explicitly specifies a from address.**
 
+### Auth (PowerShell)
+
+```powershell
+$key = (Get-Content "$env:USERPROFILE\.litestartup\credentials" -Raw).Trim()
+Invoke-RestMethod -Uri "https://api.litestartup.com/client/v2/emails/notification" `
+  -Method Post -ContentType "application/json" `
+  -Headers @{ Authorization = "Bearer $key" } -Body $body
+```
+
+Use `/client/v2/emails` (add `from`) for the custom-domain endpoint.
+
 ---
 
 ## Flow (Notification — Default)
