@@ -38,9 +38,19 @@ Idempotent — safe to call again.
 Domain must be `verified` first (see `domain.md` status polling).
 ```
 POST /client/v2/domains/{domain_slug}/emails
-Body: { "local": "support" }            # → support@acme.com; type/purpose optional
+Body: { "local": "support" }            # → support@acme.com
 ```
+Server defaults (all overridable):
+- `type` → `team` (pass `"member"` explicitly for a personal inbox)
+- `purpose` → `transactional` (or `"marketing"`)
+- `display_name` → derived from the local part (`support` → `Support`); pass
+  `"display_name"` to override, e.g. `"Hello DAC Support"`
+- `warmup_enabled` → `true`; a warm-up plan is auto-created **only on paid plans**
+  (`"warmup_strategy"`: conservative | moderate | aggressive, default moderate)
+
 List existing inboxes with `GET /client/v2/domains/{domain_slug}/emails`.
+Update one later: `POST /client/v2/domains/{domain_slug}/emails/{email_id}`
+(body fields optional: `display_name`, `type`, `purpose`, `warmup_enabled`, `warmup_strategy`).
 
 ### 3. Report to the user
 

@@ -6,7 +6,7 @@ description: >
   write a blog post, send an email, or bind a content repository.
 metadata:
   author: litestartup-com
-  version: "1.3.4"
+  version: "1.3.5"
 ---
 
 # LiteStartup Publish Skill
